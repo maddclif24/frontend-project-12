@@ -1,0 +1,25 @@
+{
+  "name": "frontend-project-12",
+  "version": "1.0.0",
+  "description": "[![Actions Status](https://github.com/maddclif24/frontend-project-12/workflows/hexlet-check/badge.svg)](https://github.com/maddclif24/frontend-project-12/actions)",
+  "main": "frontend/src/index.js",
+  "proxy": "http://localhost:5000",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "start-server -s ./frontend/build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maddclif24/frontend-project-12.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maddclif24/frontend-project-12/issues"
+  },
+  "homepage": "https://github.com/maddclif24/frontend-project-12#readme",
+  "dependencies": {
+    "@hexlet/chat-server": "^1.1.6"
+  }
+}
