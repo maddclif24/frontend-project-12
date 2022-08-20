@@ -1,25 +1,22 @@
+/* eslint-disable object-curly-newline */
+/* eslint-disable quotes */
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React from "react";
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Switch,
-  Redirect,
-  useLocation,
-} from 'react-router-dom';
+import { Routes, Route, Outlet, Link, BrowserRouter } from "react-router-dom";
 
-import LoginPage from './Views/Login.jsx';
-import './App.css';
+import LoginPage from "./Views/Login.jsx";
+import NotFoundPage from "./Views/Not_FoundPage.jsx";
+import "./App.css";
+import routes from './routes.js';
 
 function App() {
   return (
-    <Router>
-      <div className="h-100">
-        <LoginPage/>
-      </div>
-    </Router>
+      <Routes>
+        <Route index element={<LoginPage />} />
+        <Route path={routes.loginPagePath()} element={<LoginPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
   );
 }
 
