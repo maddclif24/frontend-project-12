@@ -15,6 +15,7 @@ import {
 
 import LoginPage from "./Login.jsx";
 import NotFoundPage from "./Not_FoundPage.jsx";
+import Navbar from './HeaderNavbar.jsx';
 import "../App.css";
 import routes from "../routes.js";
 import AuthContext from '../contexts/index.jsx';
@@ -50,7 +51,9 @@ const PrivateRoute = ({ children }) => {
 function App() {
   return (
     <AuthProvider>
+      <Navbar />
       <Routes>
+      <Route path='/' element={<Chat />} />
         <Route path={routes.loginPagePath()} element={<LoginPage />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route
