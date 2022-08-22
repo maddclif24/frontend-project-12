@@ -2,43 +2,66 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable padded-blocks */
 
-import React from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import cn from "classnames";
+import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
+import routes from "../routes";
+import useAuth from '../hooks/index.jsx';
 
 const LoginPage = () => {
+
+  const [successAuth, setSuccessAuth] = useState(' ');
+  const auth = useAuth();
+  const navigation = useNavigate();
+
   const loginSchema = Yup.object().shape({
-    name: Yup.string()
-      .min(3, "Не менее 3 символов")
+    username: Yup.string()
+      // .min(3, "Не менее 3 символов")
       .max(15, "Не более 15 символов"),
     password: Yup.string()
-      .min(8, "Пароль должен быть не менее 8 символов")
+      // .min(3, "Пароль должен быть не менее 3 символов")
       .max(25, "Слишком длинный пароль >= 25"),
   });
 
   const formik = useFormik({
     initialValues: {
-      name: "",
+      username: "",
       password: "",
     },
     validationSchema: loginSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      // alert(JSON.stringify(values, null, 2));
+      try {
+        const { data } = await axios.post(routes.loginPath(), values);
+        localStorage.setItem('user', JSON.stringify(data));
+        setSuccessAuth(true);
+        auth.logIn();
+        navigation('/', { replace: true });
+      } catch (e) {
+        setSuccessAuth(false);
+      }
     },
   });
+
+  const ref = useRef(null);
+
+  const errorAuth = (
+    <Form.Text className="text-danger">
+      the username or password is incorrect
+    </Form.Text>
+  );
+
+  useEffect(() => {
+    ref.current.focus();
+  }, []);
 
   return (
     <div className="h-100">
       <div className="d-flex flex-column h-100">
-        <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
-          <div className="container">
-            <a className="navbar-brand" href="/">
-              Hexlet Chat
-            </a>
-          </div>
-        </nav>
         <div className="container-fluid h-100">
           <div className="row justify-content-center align-content-center h-100">
             <div className="col-12 col-md-8 col-xxl-6">
@@ -55,7 +78,7 @@ const LoginPage = () => {
                       controlId="formBasicEmail"
                     >
                       <FloatingLabel
-                        controlId="name"
+                        controlId="username"
                         label="Ваш ник"
                         className="mb-3"
                       >
@@ -63,13 +86,14 @@ const LoginPage = () => {
                           type="text"
                           placeholder="Ваш ник"
                           required
-                          name="name"
-                          value={formik.values.name}
+                          name="username"
+                          value={formik.values.username}
                           onChange={formik.handleChange}
                           className={cn(
                             "form-control",
-                            formik.errors.name ? "is-invalid" : "valid",
+                            !successAuth ? "is-invalid" : "valid",
                           )}
+                          ref={ref}
                         />
                         {formik.errors.name ? (
                           <div className="invalid-tooltip">
@@ -98,12 +122,12 @@ const LoginPage = () => {
                           onChange={formik.handleChange}
                           className={cn(
                             "form-control",
-                            formik.errors.password ? "is-invalid" : "valid",
+                            !successAuth ? "is-invalid" : "valid",
                           )}
                         />
-                        {formik.errors.password ? (
+                        {!successAuth ? (
                           <div className="invalid-tooltip">
-                            {formik.errors.password}
+                            Неверные имя пользователя или пароль
                           </div>
                         ) : null}
                       </FloatingLabel>
