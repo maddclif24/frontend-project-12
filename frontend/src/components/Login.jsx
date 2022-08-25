@@ -3,6 +3,7 @@
 /* eslint-disable padded-blocks */
 
 import React, { useEffect, useRef, useState } from 'react';
+import { useSelector, useDispatch, useStore } from 'react-redux';
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -11,19 +12,24 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import routes from "../routes";
 import useAuth from '../hooks/index.jsx';
+import { loginUser, selectors } from '../slices/loginSlice.js';
 
 const LoginPage = () => {
 
   const [successAuth, setSuccessAuth] = useState(' ');
   const auth = useAuth();
   const navigation = useNavigate();
+  const store = useSelector((state) => state.userCurrent);
+  console.log(store);
+  const dispatch = useDispatch();
+  // const { getState } = useStore();
 
   const loginSchema = Yup.object().shape({
     username: Yup.string()
-      // .min(3, "Не менее 3 символов")
+      .min(3, "Не менее 3 символов")
       .max(15, "Не более 15 символов"),
     password: Yup.string()
-      // .min(3, "Пароль должен быть не менее 3 символов")
+      .min(3, "Пароль должен быть не менее 3 символов")
       .max(25, "Слишком длинный пароль >= 25"),
   });
 
@@ -33,19 +39,25 @@ const LoginPage = () => {
       password: "",
     },
     validationSchema: loginSchema,
-    onSubmit: async (values) => {
+    onSubmit: (values) => {
       // alert(JSON.stringify(values, null, 2));
-      try {
+
+      dispatch(loginUser(values));
+      /* try {
         const { data } = await axios.post(routes.loginPath(), values);
         localStorage.setItem('user', JSON.stringify(data));
         setSuccessAuth(true);
         auth.logIn();
         navigation('/', { replace: true });
       } catch (e) {
+        console.log(e);
         setSuccessAuth(false);
       }
+      */
     },
   });
+
+  console.log(formik.errors);
 
   const ref = useRef(null);
 
@@ -91,13 +103,13 @@ const LoginPage = () => {
                           onChange={formik.handleChange}
                           className={cn(
                             "form-control",
-                            !successAuth ? "is-invalid" : "valid",
+                            !store.login ? "is-invalid" : "valid",
                           )}
                           ref={ref}
                         />
                         {formik.errors.name ? (
                           <div className="invalid-tooltip">
-                            {formik.errors.name}
+                            {formik.errors.username}
                           </div>
                         ) : null}
                       </FloatingLabel>
@@ -122,10 +134,10 @@ const LoginPage = () => {
                           onChange={formik.handleChange}
                           className={cn(
                             "form-control",
-                            !successAuth ? "is-invalid" : "valid",
+                            !store.login ? "is-invalid" : "valid",
                           )}
                         />
-                        {!successAuth ? (
+                        {!store.login ? (
                           <div className="invalid-tooltip">
                             Неверные имя пользователя или пароль
                           </div>
