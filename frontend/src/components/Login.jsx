@@ -1,3 +1,4 @@
+/* eslint-disable no-extra-boolean-cast */
 /* eslint-disable quotes */
 /* eslint-disable no-unused-vars */
 /* eslint-disable padded-blocks */
@@ -20,9 +21,7 @@ const LoginPage = () => {
   const auth = useAuth();
   const navigation = useNavigate();
   const store = useSelector((state) => state.userCurrent);
-  console.log(store);
   const dispatch = useDispatch();
-  // const { getState } = useStore();
 
   const loginSchema = Yup.object().shape({
     username: Yup.string()
@@ -40,24 +39,14 @@ const LoginPage = () => {
     },
     validationSchema: loginSchema,
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
-
       dispatch(loginUser(values));
-      /* try {
-        const { data } = await axios.post(routes.loginPath(), values);
-        localStorage.setItem('user', JSON.stringify(data));
-        setSuccessAuth(true);
-        auth.logIn();
-        navigation('/', { replace: true });
-      } catch (e) {
-        console.log(e);
-        setSuccessAuth(false);
-      }
-      */
     },
   });
 
-  console.log(formik.errors);
+  if (store.login === 'true') {
+    auth.logIn();
+    navigation('/', { replace: true });
+  }
 
   const ref = useRef(null);
 
@@ -103,15 +92,15 @@ const LoginPage = () => {
                           onChange={formik.handleChange}
                           className={cn(
                             "form-control",
-                            !store.login ? "is-invalid" : "valid",
+                            store.login === 'false' ? "is-invalid" : "valid",
                           )}
                           ref={ref}
                         />
-                        {formik.errors.name ? (
+                        { /* formik.errors.username ? (
                           <div className="invalid-tooltip">
                             {formik.errors.username}
                           </div>
-                        ) : null}
+                        ) : null */ }
                       </FloatingLabel>
                     </Form.Group>
 
@@ -134,10 +123,10 @@ const LoginPage = () => {
                           onChange={formik.handleChange}
                           className={cn(
                             "form-control",
-                            !store.login ? "is-invalid" : "valid",
+                            store.login === 'false' ? "is-invalid" : "valid",
                           )}
                         />
-                        {!store.login ? (
+                        {store.login === 'false' ? (
                           <div className="invalid-tooltip">
                             Неверные имя пользователя или пароль
                           </div>
