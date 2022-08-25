@@ -7,6 +7,7 @@ import {
   createSlice,
   createEntityAdapter,
 } from '@reduxjs/toolkit';
+
 import routes from '../routes.js';
 
 export const loginUser = createAsyncThunk('user/loginUser', async (values) => {
@@ -20,23 +21,21 @@ const loginSlice = createSlice({
   name: 'user',
   // Добавляем в состояние отслеживание процесса загрузки
   // { ids: [], entities: {}, loading: 'idle', error: null }
-  initialState: loginAdapter.getInitialState({ login: true, error: null }),
+  initialState: loginAdapter.getInitialState({ login: ' ', error: null }),
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
         state.login = 'idle';
         state.error = null;
-        // localStorage.setItem('user', JSON.stringify(action.payload));
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.login = true;
+        state.login = 'true';
         state.error = null;
-        // localStorage.setItem('user', JSON.stringify(action.payload));
+        localStorage.setItem('user', JSON.stringify(action.payload));
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.login = false;
+        state.login = 'false';
         state.error = 'Invalid user';
-        // localStorage.setItem('user', JSON.stringify(action.payload));
       });
   },
 });
