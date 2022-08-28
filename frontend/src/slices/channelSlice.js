@@ -1,0 +1,27 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-param-reassign */
+import axios from 'axios';
+
+import { createAsyncThunk, createSlice, createEntityAdapter } from '@reduxjs/toolkit';
+// Чтобы не хардкодить урлы, делаем модуль, в котором они создаются
+import routes from '../routes.js';
+
+const channelAdapter = createEntityAdapter();
+
+const channelSlice = createSlice({
+  name: 'channel',
+  // Добавляем в состояние отслеживание процесса загрузки
+  // { ids: [], entities: {}, loading: 'idle', error: null, currentChannelId: null }
+  initialState: channelAdapter.getInitialState({ loading: 'idle', error: null, currentChannelId: null }),
+  reducers: {
+    addChannels: (state, actions) => {
+      const { entities, ids, currentChannelId } = actions.payload;
+      state.entities = entities;
+      state.ids = ids;
+      state.currentChannelId = currentChannelId;
+    },
+  },
+});
+export const name = (state) => state.channels.entities[state.currentChannelId].name;
+export const { actions } = channelSlice;
+export default channelSlice.reducer;

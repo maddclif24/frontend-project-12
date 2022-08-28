@@ -1,7 +1,45 @@
-import React from 'react';
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Form } from 'react-bootstrap';
+import axios from 'axios';
+import { normalize, schema } from 'normalizr';
+import routes from '../routes';
+import useAuth from '../hooks/index.jsx';
+import { actions as channelActions, name } from '../slices/channelSlice.js';
+import Channels from './Channels.jsx';
+import Title from './GeneralTitle.jsx';
 
-const Chat = () => (
+const Chat = () => {
+  const auth = useAuth();
+  const dispatch = useDispatch();
+
+  const getNormalalized = (data) => {
+    const shema = new schema.Entity('channels');
+
+    const normalizedData = normalize(data, [shema]);
+
+    return normalizedData;
+  };
+
+  const store = useSelector((state) => state.channels);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { token } = JSON.parse(localStorage.getItem('user', 'token'));
+      const { data } = await axios.get(routes.dataPath(), { headers: { Authorization: `Bearer ${token}` } });
+      console.log(data);
+      const normalizedData = getNormalalized(data.channels);
+      console.log(normalizedData);
+      const { channels } = normalizedData.entities;
+      dispatch(channelActions.addChannels({ entities: channels, ids: Object.keys(channels), currentChannelId: data.currentChannelId }));
+    };
+    fetchData();
+  }, []);
+
+  return (
   <div className="container h-100 my-4 overflow-hidden rounded shadow">
     <div className="row h-100 bg-white flex-md-row">
       <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
@@ -21,30 +59,11 @@ const Chat = () => (
             <span className="visually-hidden">+</span>
           </button>
         </div>
-        <ul className="nav flex-column nav-pills nav-fill px-2">
-          <li className="nav-item w-100">
-            <button
-              type="button"
-              className="w-100 rounded-0 text-start btn btn-secondary"
-            >
-              <span className="me-1">#</span>general
-            </button>
-          </li>
-          <li className="nav-item w-100">
-            <button type="button" className="w-100 rounded-0 text-start btn">
-              <span className="me-1">#</span>random
-            </button>
-          </li>
-        </ul>
+        <Channels channels={store.entities} currentChannelId={store.currentChannelId}/>
       </div>
       <div className="col p-0 h-100">
         <div className="d-flex flex-column h-100">
-          <div className="bg-light mb-4 p-3 shadow-sm small">
-            <p className="m-0">
-              <b># general</b>
-            </p>
-            <span className="text-muted">0 сообщений</span>
-          </div>
+          <Title currentChannel={store} />
           <div
             id="messages-box"
             className="chat-messages overflow-auto px-5 "
@@ -86,6 +105,7 @@ const Chat = () => (
       </div>
     </div>
   </div>
-);
+  );
+};
 
 export default Chat;
