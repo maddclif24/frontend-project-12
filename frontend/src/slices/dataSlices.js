@@ -12,7 +12,11 @@ export const fetchGetData = createAsyncThunk(
   async () => {
     // Здесь только логика запроса и возврата данных
     // Никакой обработки ошибок
-    const response = await axios.get(routes.tasksPath());
+    const { token } = JSON.parse(localStorage.getItem('user', 'token'));
+    // const token = localStorage.getItem('user', 'token');
+    // 'Authorization': `token ${access_token}`
+    const response = await axios.get(routes.dataPath(), { headers: { Authorization: `Bearer ${token}` } });
+    console.log(response);
     return response.data;
   },
 );
@@ -36,8 +40,7 @@ const dataSlice = createSlice({
     builder
       .addCase(fetchGetData.fulfilled, (state, action) => {
         console.log(action);
-      })
-      .addCase(loginUser.fulfilled, (state, action) => {
+        dataAdapter.addMany(state, action.payload);
       });
   },
 });
