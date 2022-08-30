@@ -14,6 +14,9 @@ const viewSlice = createSlice({
       console.log(actions);
       state.activeChannelId = actions.payload;
     },
+    switchActiveChannel: (state, actions) => {
+      state.activeChannelId = actions.payload;
+    },
   },
 });
 export const { actions } = viewSlice;
