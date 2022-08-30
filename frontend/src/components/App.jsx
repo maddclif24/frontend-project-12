@@ -21,7 +21,7 @@ import "../App.css";
 import routes from "../routes.js";
 import AuthContext from "../contexts/index.jsx";
 import useAuth from "../hooks/index.jsx";
-import Chat from "./Chat.jsx";
+import Chat from "./Chat/Chat.jsx";
 import store from "../slices/index.js";
 
 const AuthProvider = ({ children }) => {

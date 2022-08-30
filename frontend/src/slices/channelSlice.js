@@ -22,6 +22,6 @@ const channelSlice = createSlice({
     },
   },
 });
-export const name = (state) => state.channels.entities[state.currentChannelId].name;
+export const selectors = channelAdapter.getSelectors((state) => state.channels);
 export const { actions } = channelSlice;
 export default channelSlice.reducer;
