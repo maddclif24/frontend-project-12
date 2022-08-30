@@ -17,5 +17,6 @@ console.log(configureStore({
     data: dataReducer,
     userCurrent: loginReducer,
     channels: channelSlice,
+    viewSlice,
   },
 }).getState());
