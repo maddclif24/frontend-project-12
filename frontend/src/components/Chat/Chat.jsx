@@ -8,10 +8,12 @@ import axios from 'axios';
 import { normalize, schema } from 'normalizr';
 import routes from '../../routes';
 import useAuth from '../../hooks/index.jsx';
+
 import { actions as channelActions } from '../../slices/channelSlice.js';
 import { actions as viewActions } from '../../slices/viewSlice.js';
+import { actions as messageSlice } from '../../slices/messageSlice.js';
 
-import InputChat from './WindowChat.jsx';
+import InputChat from './FormChat.jsx';
 import Messeges from './Messeges.jsx';
 import HeaderChannelList from './HeaderChannelList.jsx';
 import ChannelList from './ChannelLIst.jsx';
@@ -32,11 +34,12 @@ const Chat = () => {
     const fetchData = async () => {
       const { token } = JSON.parse(localStorage.getItem('user', 'token'));
       const { data } = await axios.get(routes.dataPath(), { headers: { Authorization: `Bearer ${token}` } });
+      console.log(data);
       const normalizedData = getNormalalized(data.channels);
-      console.log(normalizedData);
       const { channels } = normalizedData.entities;
       dispatch(channelActions.addChannels({ entities: channels, ids: Object.keys(channels) }));
       dispatch(viewActions.setActiveChannelId(data.currentChannelId));
+      dispatch(messageSlice.getMessages(data.messages));
     };
     fetchData();
   }, []);
