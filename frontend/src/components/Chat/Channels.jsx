@@ -7,7 +7,6 @@ import Channel from './Channel.jsx';
 
 const Channels = () => {
   const channels = useSelector((state) => state.channels.entities);
-  console.log(channels);
   const arrayChannels = Object.keys(channels);
   return (
     <ul className="nav flex-column nav-pills nav-fill px-2">
