@@ -3,6 +3,7 @@ import dataReducer from './dataSlices.js';
 import loginReducer from './loginSlice.js';
 import channelSlice from './channelSlice.js';
 import viewSlice from './viewSlice.js';
+import messageSlice from './messageSlice.js';
 
 export default configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export default configureStore({
     userCurrent: loginReducer,
     channels: channelSlice,
     viewSlice,
+    messageSlice,
   },
 });
 console.log(configureStore({
@@ -18,5 +20,6 @@ console.log(configureStore({
     userCurrent: loginReducer,
     channels: channelSlice,
     viewSlice,
+    messageSlice,
   },
 }).getState());
