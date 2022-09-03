@@ -11,7 +11,7 @@ export default configureStore({
     userCurrent: loginReducer,
     channels: channelSlice,
     viewSlice,
-    messageSlice,
+    messages: messageSlice,
   },
 });
 console.log(configureStore({
@@ -20,6 +20,6 @@ console.log(configureStore({
     userCurrent: loginReducer,
     channels: channelSlice,
     viewSlice,
-    messageSlice,
+    messages: messageSlice,
   },
 }).getState());

@@ -4,13 +4,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Channel from './Channel.jsx';
+import { selectors as channelSelectors } from '../../slices/channelSlice';
 
 const Channels = () => {
-  const channels = useSelector((state) => state.channels.entities);
+  const channels = useSelector(channelSelectors.selectAll);
   const arrayChannels = Object.keys(channels);
   return (
     <ul className="nav flex-column nav-pills nav-fill px-2">
-      {arrayChannels.map((key) => <Channel key={key} channel={channels[key]} currentChannel={1}/>)}
+      {channels.map((channel) => <Channel key={channel.id} channel={channel} currentChannel={1}/>)}
   </ul>
   );
 };

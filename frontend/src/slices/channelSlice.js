@@ -18,8 +18,10 @@ const channelSlice = createSlice({
       const { entities, ids, currentChannelId } = actions.payload;
       state.entities = entities;
       state.ids = ids;
-      state.currentChannelId = currentChannelId;
+      // state.currentChannelId = currentChannelId;
     },
+    addNewChannel: channelAdapter.addOne,
+    renameChannel: channelAdapter.updateOne,
   },
 });
 export const selectors = channelAdapter.getSelectors((state) => state.channels);
