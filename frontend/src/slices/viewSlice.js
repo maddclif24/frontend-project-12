@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
+import { actions as channelSlice } from './channelSlice.js';
 
 const initialState = {
   activeChannelId: null,
