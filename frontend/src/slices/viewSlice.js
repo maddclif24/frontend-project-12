@@ -12,10 +12,10 @@ const viewSlice = createSlice({
   initialState,
   reducers: {
     setActiveChannelId: (state, actions) => {
-      console.log(actions);
       state.activeChannelId = actions.payload;
     },
     switchActiveChannel: (state, actions) => {
+      console.log(actions);
       state.activeChannelId = actions.payload;
     },
   },
