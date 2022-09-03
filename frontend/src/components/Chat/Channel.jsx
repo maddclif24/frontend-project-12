@@ -56,7 +56,7 @@ const Channel = ({ channel }) => {
 
       <Dropdown.Menu>
         <Dropdown.Item href="#" onClick={handleClickRemove}>Удалить</Dropdown.Item>
-        { /* <RemoveChannel show={isShowRemove} close={handleCloseRemove}/> */ }
+        { isShowRemove ? <RemoveChannel show={isShowRemove} setShow={setShowRemove} id={button.props.id} close={handleCloseRemove}/> : null }
         <Dropdown.Item href="#" onClick={handleClick}>Переименовать</Dropdown.Item>
         {isShowRename ? <RenameChannel show={isShowRename} setShow={setShowRename} id={button.props.id} close={handleClose}/> : null }
       </Dropdown.Menu>

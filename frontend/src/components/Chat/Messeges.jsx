@@ -8,6 +8,7 @@ import { selectors as messageSelectors } from '../../slices/messageSlice.js';
 const Messeges = () => {
   const activeChannel = useSelector(({ viewSlice }) => viewSlice.activeChannelId);
   const messages = useSelector(messageSelectors.selectAll).filter(({ channelId }) => channelId === activeChannel);
+  console.log(useSelector(messageSelectors.selectAll));
   return (
     <div id="messages-box" className="chat-messages overflow-auto px-5 ">
       {messages.map((message) => <Message key={message.id} message={message} />)}

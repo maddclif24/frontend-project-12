@@ -14,9 +14,22 @@ import { actions as viewActions } from '../../../slices/viewSlice.js';
 
 const socket = io();
 
-const RemoveChannel = ({ show, close, id }) => {
-  console.log('TRUE');
+const RemoveChannel = ({
+  show, close, id, setShow,
+}) => {
+  // console.log(id);
   const dispacth = useDispatch();
+  const removeChannel = (channelId) => (e) => {
+    e.preventDefault();
+    socket.emit('removeChannel', { id });
+    socket.on('removeChannel', (payload) => {
+      console.log(payload);
+      dispacth(channelActions.removeChannel(payload));
+    });
+    setShow(false);
+    dispacth(viewActions.switchActiveChannel(1));
+  };
+
   return (
       <Modal show={show} onHide={close}>
       <Modal.Header closeButton>
@@ -27,7 +40,7 @@ const RemoveChannel = ({ show, close, id }) => {
           <Button variant="secondary" onClick={close}>
             Закрыть
           </Button>
-          <Button variant="danger" onClick={close}>
+          <Button variant="danger" onClick={removeChannel(id)}>
             Удалить
           </Button>
         </Modal.Footer>
