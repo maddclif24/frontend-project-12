@@ -15,31 +15,47 @@ import { actions as messageSlice } from '../../slices/messageSlice.js';
 
 import InputChat from './FormChat.jsx';
 import Messeges from './Messeges.jsx';
-import HeaderChannelList from './HeaderChannelList.jsx';
+import HeaderChatList from './HeaderChat.jsx';
 import ChannelList from './ChannelLIst.jsx';
 
 const Chat = () => {
   const auth = useAuth();
   const dispatch = useDispatch();
 
-  const getNormalalized = (data) => {
-    const shema = new schema.Entity('channels');
+  const channelSchema = new schema.Entity('channels');
+  const messageSchema = new schema.Entity('messages');
 
-    const normalizedData = normalize(data, [shema]);
+  /* const getNormalalized = (data) => {
+    const shema = new schema.Entity('channels');
+    const message = new schema.Entity('messages');
+
+    const normalizedData = normalize(data, [message]);
 
     return normalizedData;
+  };
+  */
+  const getNormalalized = (data) => {
+    const entities = data.reduce((acc, item) => {
+      acc[item.id] = item;
+      return acc;
+    }, {});
+
+    const ids = data.map((item) => item.id);
+    return { entities, ids };
   };
 
   useEffect(() => {
     const fetchData = async () => {
       const { token } = JSON.parse(localStorage.getItem('user', 'token'));
       const { data } = await axios.get(routes.dataPath(), { headers: { Authorization: `Bearer ${token}` } });
-      console.log(data);
-      const normalizedData = getNormalalized(data.channels);
-      const { channels } = normalizedData.entities;
-      dispatch(channelActions.addChannels({ entities: channels, ids: Object.keys(channels) }));
+      const channels = getNormalalized(data.channels);
+      const messages = getNormalalized(data.messages);
+      // const { channels } = normalizedChannels.entities;
+      // const { messages } = normalizedDataMessages.entities;
+      console.log(channels, messages);
+      dispatch(channelActions.addChannels(channels));
       dispatch(viewActions.setActiveChannelId(data.currentChannelId));
-      dispatch(messageSlice.getMessages(data.messages));
+      dispatch(messageSlice.addMessages(messages));
     };
     fetchData();
   }, []);

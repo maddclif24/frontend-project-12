@@ -2,23 +2,24 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
-const channelAdapter = createEntityAdapter();
+const messageAdapter = createEntityAdapter();
 
-const initialState = { messages: [] };
+// const initialState = { messages: [] };
+
+const initialState = messageAdapter.getInitialState();
 
 const messageSlice = createSlice({
   name: 'message',
   initialState,
   reducers: {
-    getMessages: (state, actions) => {
-      console.log(actions);
-      const { payload } = actions;
-      state.messages = [...payload];
+    addMessages: (state, actions) => {
+      const { entities, ids } = actions.payload;
+      state.entities = entities;
+      state.ids = ids;
     },
-    addNewMessage: (state, actions) => {
-      state.messages.push(actions.payload);
-    },
+    addNewMessage: messageAdapter.addOne,
   },
 });
+export const selectors = messageAdapter.getSelectors((state) => state.messages);
 export const { actions } = messageSlice;
 export default messageSlice.reducer;
