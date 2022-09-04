@@ -15,7 +15,7 @@ import {
 } from '../../../slices/channelSlice.js';
 import { actions as viewActions } from '../../../slices/viewSlice.js';
 
-const socket = io();
+const socket = io('http://0.0.0.0:5001');
 
 const RenameChannel = ({
   show, close, id, setShow,
