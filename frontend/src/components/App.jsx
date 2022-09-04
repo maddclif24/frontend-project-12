@@ -16,6 +16,7 @@ import {
 import { Provider } from "react-redux";
 import LoginPage from "./Login.jsx";
 import NotFoundPage from "./Not_FoundPage.jsx";
+import SingUpPage from "./SignUp.jsx";
 import Navbar from "./HeaderNavbar.jsx";
 import "../App.css";
 import routes from "../routes.js";
@@ -56,6 +57,7 @@ function App() {
         <Routes>
           { /* <Route path="/" element={<Chat />} /> */ }
           <Route path={routes.loginPagePath()} element={<LoginPage />} />
+          <Route path={routes.signupPagePath()} element={<SingUpPage />} />
           <Route path="*" element={<NotFoundPage />} />
           <Route
             path="/"

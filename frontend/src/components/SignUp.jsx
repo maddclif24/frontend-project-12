@@ -3,62 +3,47 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable padded-blocks */
 
-import React, { useEffect, useRef, useState } from 'react';
-import { useSelector, useDispatch, useStore } from 'react-redux';
+import React, { useEffect, useRef, useState } from "react";
+import { useSelector, useDispatch, useStore } from "react-redux";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import cn from "classnames";
-import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
 import routes from "../routes";
-import useAuth from '../hooks/index.jsx';
-import { loginUser, selectors } from '../slices/loginSlice.js';
+import useAuth from "../hooks/index.jsx";
+import { loginUser, selectors } from "../slices/loginSlice.js";
 
-const LoginPage = () => {
+const SingUpPage = () => {
+  const ref = useRef(null);
 
-  const [successAuth, setSuccessAuth] = useState(' ');
-  const auth = useAuth();
-  const navigation = useNavigate();
-  const store = useSelector((state) => state.userCurrent);
-  const dispatch = useDispatch();
-
-  const loginSchema = Yup.object().shape({
+  const signUpSchema = Yup.object().shape({
     username: Yup.string()
       .min(3, "Не менее 3 символов")
       .max(15, "Не более 15 символов"),
     password: Yup.string()
-      .min(3, "Пароль должен быть не менее 3 символов")
-      .max(25, "Слишком длинный пароль >= 25"),
+      .min(6, "Не менее 6 символов")
+      .max(25, "Не более 25 символов"),
+    confirm: Yup.string().oneOf(
+      [Yup.ref("password"), null],
+      "Пароли не совпадают",
+    ),
   });
 
-  const formik = useFormik({
+  const f = useFormik({
     initialValues: {
       username: "",
       password: "",
+      confirm: "",
     },
-    validationSchema: loginSchema,
+    validationSchema: signUpSchema,
     onSubmit: (values) => {
-      dispatch(loginUser(values));
+      console.log(values);
     },
   });
 
-  if (store.login === 'true') {
-    auth.logIn();
-    navigation('/', { replace: true });
-  }
-
-  const ref = useRef(null);
-
-  const errorAuth = (
-    <Form.Text className="text-danger">
-      the username or password is incorrect
-    </Form.Text>
-  );
-
-  useEffect(() => {
-    ref.current.focus();
-  }, []);
+  console.log(f.errors);
 
   return (
     <div className="h-100">
@@ -71,36 +56,34 @@ const LoginPage = () => {
                   <div className="col-12 col-md-6 d-flex align-items-center justify-content-center"></div>
                   <Form
                     className="col-12 col-md-6 mt-3 mt-mb-0"
-                    onSubmit={formik.handleSubmit}
+                    onSubmit={f.handleSubmit}
                   >
-                    <h1 className="text-center mb-4">Войти</h1>
+                    <h1 className="text-center mb-4">Регистрация</h1>
                     <Form.Group
                       className="form-floating mb-3"
                       controlId="formBasicEmail"
                     >
                       <FloatingLabel
                         controlId="username"
-                        label="Ваш ник"
+                        label="Имя пользователя"
                         className="mb-3"
                       >
                         <Form.Control
                           type="text"
-                          placeholder="Ваш ник"
+                          placeholder="Имя пользователя"
                           required
+                          onChange={f.handleChange}
                           name="username"
-                          value={formik.values.username}
-                          onChange={formik.handleChange}
                           className={cn(
                             "form-control",
-                            store.login === 'false' ? "is-invalid" : "valid",
+                            f.errors.username ? "is-invalid" : "valid",
                           )}
-                          ref={ref}
                         />
-                        { /* formik.errors.username ? (
+                        {f.errors.username ? (
                           <div className="invalid-tooltip">
-                            {formik.errors.username}
+                            {f.errors.username}
                           </div>
-                        ) : null */ }
+                        ) : null}
                       </FloatingLabel>
                     </Form.Group>
 
@@ -110,25 +93,51 @@ const LoginPage = () => {
                     >
                       <FloatingLabel
                         controlId="password"
-                        label="Ваш пароль"
+                        label="Пароль"
                         className="mb-3"
                         type="password"
                       >
                         <Form.Control
                           type="password"
                           required
-                          placeholder="Ваш пароль"
+                          placeholder="Пароль"
                           name="password"
-                          value={formik.values.password}
-                          onChange={formik.handleChange}
+                          onChange={f.handleChange}
                           className={cn(
                             "form-control",
-                            store.login === 'false' ? "is-invalid" : "valid",
+                            f.errors.password ? "is-invalid" : "valid",
                           )}
                         />
-                        {store.login === 'false' ? (
+                        {f.errors.password ? (
                           <div className="invalid-tooltip">
-                            Неверные имя пользователя или пароль
+                            {f.errors.password}
+                          </div>
+                        ) : null}
+                      </FloatingLabel>
+                    </Form.Group>
+                    <Form.Group
+                      className="form-floating mb-3"
+                      controlId="formBasicEmail"
+                    >
+                      <FloatingLabel
+                        controlId="confirm"
+                        label="Подтвердите пароль"
+                        className="mb-3"
+                      >
+                        <Form.Control
+                          type="confirm"
+                          placeholder="Подтвердите пароль"
+                          required
+                          name="confirm"
+                          onChange={f.handleChange}
+                          className={cn(
+                            "form-control",
+                            f.errors.confirm ? "is-invalid" : "valid",
+                          )}
+                        />
+                        {f.errors.confirm ? (
+                          <div className="invalid-tooltip">
+                            {f.errors.confirm}
                           </div>
                         ) : null}
                       </FloatingLabel>
@@ -138,15 +147,9 @@ const LoginPage = () => {
                       className="w-100 mb-3 btn"
                       type="submit"
                     >
-                      Войти
+                      Зарегистрироваться
                     </Button>
                   </Form>
-                </div>
-                <div className="card-footer p-4">
-                  <div className="text-center">
-                    <span>Нет аккаунта?</span>
-                    <a href="/signup">Регистрация</a>
-                  </div>
                 </div>
               </div>
             </div>
@@ -156,4 +159,4 @@ const LoginPage = () => {
     </div>
   );
 };
-export default LoginPage;
+export default SingUpPage;
