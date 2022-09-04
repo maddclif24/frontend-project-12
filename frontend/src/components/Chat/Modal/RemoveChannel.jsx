@@ -12,22 +12,21 @@ import * as Yup from 'yup';
 import { actions as channelActions } from '../../../slices/channelSlice.js';
 import { actions as viewActions } from '../../../slices/viewSlice.js';
 
-const socket = io();
+const socket = io('http://0.0.0.0:5001');
 
 const RemoveChannel = ({
   show, close, id, setShow,
 }) => {
   // console.log(id);
   const dispacth = useDispatch();
-  const removeChannel = (channelId) => (e) => {
+  const removeChannel = (e) => {
     e.preventDefault();
     socket.emit('removeChannel', { id });
     socket.on('removeChannel', (payload) => {
-      console.log(payload);
       dispacth(channelActions.removeChannel(payload));
+      setShow(false);
+      dispacth(viewActions.switchActiveChannel(1));
     });
-    setShow(false);
-    dispacth(viewActions.switchActiveChannel(1));
   };
 
   return (
@@ -40,7 +39,7 @@ const RemoveChannel = ({
           <Button variant="secondary" onClick={close}>
             Закрыть
           </Button>
-          <Button variant="danger" onClick={removeChannel(id)}>
+          <Button variant="danger" onClick={removeChannel}>
             Удалить
           </Button>
         </Modal.Footer>

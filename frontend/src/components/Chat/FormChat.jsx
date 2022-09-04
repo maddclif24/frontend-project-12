@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 import { io } from 'socket.io-client';
 import { actions as messageSlice } from '../../slices/messageSlice.js';
 
-const socket = io();
+const socket = io('http://0.0.0.0:5001');
 
 const InputChat = () => {
   const [disabled, setDisable] = useState(null);
