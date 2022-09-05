@@ -13,24 +13,29 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import routes from "../routes";
 import useAuth from "../hooks/index.jsx";
-import { loginUser, selectors } from "../slices/loginSlice.js";
+import { loginUser, signupUser, selectors } from "../slices/loginSlice.js";
 
 const SingUpPage = () => {
   const ref = useRef(null);
 
+  const dispatch = useDispatch();
+  const navigation = useNavigate();
+  const auth = useAuth();
+
   const signUpSchema = Yup.object().shape({
     username: Yup.string()
       .min(3, "Не менее 3 символов")
-      .max(15, "Не более 15 символов"),
+      .max(20, "До 20 символов"),
     password: Yup.string()
       .min(6, "Не менее 6 символов")
-      .max(25, "Не более 25 символов"),
+      .max(25, "До 25 символов"),
     confirm: Yup.string().oneOf(
       [Yup.ref("password"), null],
       "Пароли не совпадают",
     ),
   });
 
+  const store = useSelector((state) => state.userCurrent);
   const f = useFormik({
     initialValues: {
       username: "",
@@ -40,10 +45,15 @@ const SingUpPage = () => {
     validationSchema: signUpSchema,
     onSubmit: (values) => {
       console.log(values);
+      const { username, password } = values;
+      dispatch(signupUser({ username, password }));
     },
   });
 
-  console.log(f.errors);
+  if (store.login === "true") {
+    auth.logIn();
+    navigation("/", { replace: true });
+  }
 
   return (
     <div className="h-100">
@@ -76,7 +86,7 @@ const SingUpPage = () => {
                           name="username"
                           className={cn(
                             "form-control",
-                            f.errors.username ? "is-invalid" : "valid",
+                            f.errors.username || store.error?.statusCode ? "is-invalid" : "valid",
                           )}
                         />
                         {f.errors.username ? (
@@ -105,7 +115,7 @@ const SingUpPage = () => {
                           onChange={f.handleChange}
                           className={cn(
                             "form-control",
-                            f.errors.password ? "is-invalid" : "valid",
+                            f.errors.password || store.error?.statusCode ? "is-invalid" : "valid",
                           )}
                         />
                         {f.errors.password ? (
@@ -132,12 +142,17 @@ const SingUpPage = () => {
                           onChange={f.handleChange}
                           className={cn(
                             "form-control",
-                            f.errors.confirm ? "is-invalid" : "valid",
+                            f.errors.confirm || store.error?.statusCode ? "is-invalid" : "valid",
                           )}
                         />
                         {f.errors.confirm ? (
                           <div className="invalid-tooltip">
                             {f.errors.confirm}
+                          </div>
+                        ) : null}
+                        {store.error?.statusCode ? (
+                          <div className="invalid-tooltip">
+                            Такой пользователь уже существует
                           </div>
                         ) : null}
                       </FloatingLabel>

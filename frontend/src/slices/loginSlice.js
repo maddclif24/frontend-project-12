@@ -15,6 +15,15 @@ export const loginUser = createAsyncThunk('user/loginUser', async (values) => {
   return data;
 });
 
+export const signupUser = createAsyncThunk('user/signupUser', async (values, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post(routes.signupPath(), values);
+    return data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
 const loginAdapter = createEntityAdapter();
 
 const loginSlice = createSlice({
@@ -36,6 +45,16 @@ const loginSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.login = 'false';
         state.error = 'Invalid user';
+      })
+      .addCase(signupUser.rejected, (state, action) => {
+        state.login = 'false';
+        state.error = action.payload;
+        console.log(action);
+      })
+      .addCase(signupUser.fulfilled, (state, action) => {
+        state.login = 'true';
+        state.error = null;
+        localStorage.setItem('user', JSON.stringify(action.payload));
       });
   },
 });
