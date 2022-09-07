@@ -3,6 +3,7 @@
 /* eslint-disable quotes */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, Provider } from "react-redux";
 
 import {
   BrowserRouter as Router,
@@ -13,7 +14,6 @@ import {
   useLocation,
 } from "react-router-dom";
 
-import { Provider } from "react-redux";
 import LoginPage from "./Login.jsx";
 import NotFoundPage from "./Not_FoundPage.jsx";
 import SingUpPage from "./SignUp.jsx";
@@ -24,16 +24,18 @@ import AuthContext from "../contexts/index.jsx";
 import useAuth from "../hooks/index.jsx";
 import Chat from "./Chat/Chat.jsx";
 import store from "../slices/index.js";
+import { actions as loginActions } from '../slices/loginSlice.js';
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
-
+  const dispatch = useDispatch();
   const logIn = () => setLoggedIn(true);
   const logOut = () => {
     localStorage.removeItem("user");
+    dispatch(loginActions.logOutReducee(false));
     setLoggedIn(false);
   };
-
+  console.log(loggedIn);
   return (
     <AuthContext.Provider value={{ loggedIn, logIn, logOut }}>
       {children}
@@ -46,7 +48,7 @@ const PrivateRoute = ({ children }) => {
   const location = useLocation();
   const user = JSON.parse(localStorage.getItem("user"));
 
-  return user ? children : <Navigate to="/login" state={{ from: location }} />;
+  return auth.loggedIn ? children : <Navigate to="/login" state={{ from: location }} />;
 };
 
 function App() {
@@ -56,7 +58,7 @@ function App() {
         <Navbar />
         <Routes>
           { /* <Route path="/" element={<Chat />} /> */ }
-          <Route path={routes.loginPagePath()} element={<LoginPage />} />
+          <Route index path={routes.loginPagePath()} element={<LoginPage />} />
           <Route path={routes.signupPagePath()} element={<SingUpPage />} />
           <Route path="*" element={<NotFoundPage />} />
           <Route
