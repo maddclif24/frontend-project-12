@@ -50,9 +50,9 @@ const SingUpPage = () => {
     },
   });
 
-  if (store.login === "true") {
+  if (store.login) {
     auth.logIn();
-    navigation("/", { replace: true });
+    navigation('/', { replace: true });
   }
 
   return (

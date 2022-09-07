@@ -3,21 +3,20 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable padded-blocks */
 
-import React, { useEffect, useRef, useState } from 'react';
-import { useSelector, useDispatch, useStore } from 'react-redux';
+import React, { useEffect, useRef, useState } from "react";
+import { useSelector, useDispatch, useStore } from "react-redux";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import cn from "classnames";
-import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
 import routes from "../routes";
-import useAuth from '../hooks/index.jsx';
-import { loginUser, selectors } from '../slices/loginSlice.js';
+import useAuth from "../hooks/index.jsx";
+import { loginUser, selectors } from "../slices/loginSlice.js";
 
 const LoginPage = () => {
-
-  const [successAuth, setSuccessAuth] = useState(' ');
+  const [successAuth, setSuccessAuth] = useState(" ");
   const auth = useAuth();
   const navigation = useNavigate();
   const store = useSelector((state) => state.userCurrent);
@@ -42,11 +41,7 @@ const LoginPage = () => {
       dispatch(loginUser(values));
     },
   });
-
-  if (store.login === 'true') {
-    auth.logIn();
-    navigation('/', { replace: true });
-  }
+  console.log(store);
 
   const ref = useRef(null);
 
@@ -55,6 +50,11 @@ const LoginPage = () => {
       the username or password is incorrect
     </Form.Text>
   );
+
+  if (store.login) {
+    auth.logIn();
+    navigation('/', { replace: true });
+  }
 
   useEffect(() => {
     ref.current.focus();
@@ -92,15 +92,10 @@ const LoginPage = () => {
                           onChange={formik.handleChange}
                           className={cn(
                             "form-control",
-                            store.login === 'false' ? "is-invalid" : "valid",
+                            store.error?.statusCode ? "is-invalid" : "valid",
                           )}
                           ref={ref}
                         />
-                        { /* formik.errors.username ? (
-                          <div className="invalid-tooltip">
-                            {formik.errors.username}
-                          </div>
-                        ) : null */ }
                       </FloatingLabel>
                     </Form.Group>
 
@@ -123,12 +118,12 @@ const LoginPage = () => {
                           onChange={formik.handleChange}
                           className={cn(
                             "form-control",
-                            store.login === 'false' ? "is-invalid" : "valid",
+                            store.error?.statusCode ? "is-invalid" : "valid",
                           )}
                         />
-                        {store.login === 'false' ? (
+                        {store.error?.statusCode ? (
                           <div className="invalid-tooltip">
-                            Неверные имя пользователя или пароль
+                            Неверное имя пользователя или пароль
                           </div>
                         ) : null}
                       </FloatingLabel>

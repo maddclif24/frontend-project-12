@@ -52,7 +52,6 @@ const Chat = () => {
       const messages = getNormalalized(data.messages);
       // const { channels } = normalizedChannels.entities;
       // const { messages } = normalizedDataMessages.entities;
-      console.log(channels, messages);
       dispatch(channelActions.addChannels(channels));
       dispatch(viewActions.setActiveChannelId(data.currentChannelId));
       dispatch(messageSlice.addMessages(messages));
