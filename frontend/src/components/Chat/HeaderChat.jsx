@@ -15,6 +15,7 @@ const HeaderChatList = () => {
       <p className="m-0">
         <b># {channelName} </b>
       </p>
+      {/* Добавить счетчик сообщений */ }
       <span className="text-muted">{messages.length} сообщений</span>
     </div>
   );
