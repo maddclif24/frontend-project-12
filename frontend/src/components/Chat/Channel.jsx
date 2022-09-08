@@ -5,6 +5,7 @@
 import cn from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -15,7 +16,6 @@ import RemoveChannel from './Modal/RemoveChannel.jsx';
 const Channel = ({ channel }) => {
   const [isShowRename, setShowRename] = useState(false);
   const [isShowRemove, setShowRemove] = useState(false);
-
   const handleClick = () => setShowRename(true);
 
   const handleClose = () => setShowRename(false);
@@ -33,6 +33,8 @@ const Channel = ({ channel }) => {
     'btn',
     activeChannel === channel.id ? 'btn-secondary' : '',
   );
+
+  const { t } = useTranslation('chatPage', { returnObjects: true });
 
   const button = (
     <button
@@ -55,9 +57,9 @@ const Channel = ({ channel }) => {
       <Dropdown.Toggle split variant="outline-secondary" id="dropdown-split-basic" />
 
       <Dropdown.Menu>
-        <Dropdown.Item href="#" onClick={handleClickRemove}>Удалить</Dropdown.Item>
+        <Dropdown.Item href="#" onClick={handleClickRemove}>{t('channels.modalRemove.name')}</Dropdown.Item>
         { isShowRemove ? <RemoveChannel show={isShowRemove} setShow={setShowRemove} id={button.props.id} close={handleCloseRemove}/> : null }
-        <Dropdown.Item href="#" onClick={handleClick}>Переименовать</Dropdown.Item>
+        <Dropdown.Item href="#" onClick={handleClick}>{t('channels.modalRename.name')}</Dropdown.Item>
         {isShowRename ? <RenameChannel show={isShowRename} setShow={setShowRename} id={button.props.id} close={handleClose}/> : null }
       </Dropdown.Menu>
     </Dropdown>

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import AddChannel from './Modal/AddChannel.jsx';
 
 const HeaderChannelList = () => {
@@ -9,10 +10,11 @@ const HeaderChannelList = () => {
 
   const handleClose = () => setShow(false);
 
+  const { t } = useTranslation('chatPage', { returnObjects: true });
   return (
     <>
     <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
-      <span>Каналы</span>
+      <span>{t('channels.name')}</span>
       <button type="button" onClick={handleClick} className="p-0 text-primary btn btn-group-vertical">
         <svg
           xmlns="http://www.w3.org/2000/svg"

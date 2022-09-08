@@ -3,6 +3,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -16,6 +17,7 @@ const InputChat = () => {
   const dispatch = useDispatch();
   const ref = useRef();
   const resetForm = useRef();
+  const { t } = useTranslation('chatPage', { returnObjects: true });
 
   useEffect(() => {
     ref.current.focus();

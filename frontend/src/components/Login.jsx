@@ -7,6 +7,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch, useStore } from "react-redux";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 import { useFormik } from "formik";
+import { useTranslation } from 'react-i18next';
 import * as Yup from "yup";
 import cn from "classnames";
 import axios from "axios";
@@ -21,6 +22,7 @@ const LoginPage = () => {
   const navigation = useNavigate();
   const store = useSelector((state) => state.userCurrent);
   const dispatch = useDispatch();
+  const { t } = useTranslation('loginPage', { returnObjects: true });
 
   const loginSchema = Yup.object().shape({
     username: Yup.string()
@@ -41,7 +43,6 @@ const LoginPage = () => {
       dispatch(loginUser(values));
     },
   });
-  console.log(store);
 
   const ref = useRef(null);
 
@@ -73,7 +74,7 @@ const LoginPage = () => {
                     className="col-12 col-md-6 mt-3 mt-mb-0"
                     onSubmit={formik.handleSubmit}
                   >
-                    <h1 className="text-center mb-4">Войти</h1>
+                    <h1 className="text-center mb-4">{t('title')}</h1>
                     <Form.Group
                       className="form-floating mb-3"
                       controlId="formBasicEmail"
@@ -85,7 +86,7 @@ const LoginPage = () => {
                       >
                         <Form.Control
                           type="text"
-                          placeholder="Ваш ник"
+                          placeholder={t('username')}
                           required
                           name="username"
                           value={formik.values.username}
@@ -112,7 +113,7 @@ const LoginPage = () => {
                         <Form.Control
                           type="password"
                           required
-                          placeholder="Ваш пароль"
+                          placeholder={t('password')}
                           name="password"
                           value={formik.values.password}
                           onChange={formik.handleChange}
@@ -139,8 +140,8 @@ const LoginPage = () => {
                 </div>
                 <div className="card-footer p-4">
                   <div className="text-center">
-                    <span>Нет аккаунта?</span>
-                    <a href="/signup">Регистрация</a>
+                    <span>{t('footer.text')}</span>
+                    <a href="/signup">{t('footer.link')}</a>
                   </div>
                 </div>
               </div>
