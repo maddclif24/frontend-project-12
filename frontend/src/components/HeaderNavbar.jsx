@@ -12,7 +12,7 @@ const Navbar = () => {
     <BootstrapNavbar bg="white" expand="lg" className="shadow-sm">
       <div className="container">
         <BootstrapNavbar.Brand as={Link} to="/">Home</BootstrapNavbar.Brand>
-        { user && loggedIn ? <Button onClick={logOut}>Выйти</Button> : null }
+        { user || loggedIn ? <Button onClick={logOut}>Выйти</Button> : null }
       </div>
     </BootstrapNavbar>
   );

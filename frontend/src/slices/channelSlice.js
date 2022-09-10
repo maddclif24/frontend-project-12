@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 import axios from 'axios';
-
+import { toast } from 'react-toastify';
 import { createAsyncThunk, createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 // Чтобы не хардкодить урлы, делаем модуль, в котором они создаются
 import routes from '../routes.js';

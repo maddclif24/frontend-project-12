@@ -23,7 +23,6 @@ const LoginPage = () => {
   const store = useSelector((state) => state.userCurrent);
   const dispatch = useDispatch();
   const { t } = useTranslation('loginPage', { returnObjects: true });
-  const user = JSON.parse(localStorage.getItem("user"));
 
   const loginSchema = Yup.object().shape({
     username: Yup.string()
@@ -53,8 +52,7 @@ const LoginPage = () => {
     </Form.Text>
   );
 
-  console.log(store);
-  if (store.login || user) {
+  if (store.login) {
     auth.logIn();
     navigation('/', { replace: true });
   }

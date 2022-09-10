@@ -8,6 +8,7 @@ import {
   Modal, Form, Button, CloseButton,
 } from 'react-bootstrap';
 import { io } from 'socket.io-client';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import {
   actions as channelActions,
@@ -40,6 +41,7 @@ const RenameChannel = ({
         dispacth(channelActions.renameChannel({ id, changes: { ...payload } }));
       });
       setShow(false);
+      toast.success('Канал переименован');
     },
   });
 

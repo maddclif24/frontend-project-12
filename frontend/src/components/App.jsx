@@ -49,7 +49,7 @@ const PrivateRoute = ({ children }) => {
   const location = useLocation();
   const user = JSON.parse(localStorage.getItem("user"));
   // Пофиксить авторизацию v2
-  return auth.loggedIn ? (
+  return auth.loggedIn || user ? (
     children
   ) : (
     <Navigate to="/login" state={{ from: location }} />
@@ -65,7 +65,6 @@ function App() {
           <Routes>
             {/* <Route path="/" element={<Chat />} /> */}
             <Route
-              index
               path={routes.loginPagePath()}
               element={<LoginPage />}
             />

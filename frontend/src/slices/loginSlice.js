@@ -8,6 +8,7 @@ import {
   createEntityAdapter,
 } from '@reduxjs/toolkit';
 
+import { toast } from 'react-toastify';
 import routes from '../routes.js';
 
 export const loginUser = createAsyncThunk('user/loginUser', async (values, { rejectWithValue }) => {
@@ -46,6 +47,7 @@ const loginSlice = createSlice({
         state.login = true;
         state.error = null;
         console.log(action);
+        toast.success('Пользователь вошел');
         localStorage.setItem('user', JSON.stringify(action.payload));
       })
       .addCase(loginUser.rejected, (state, action) => {

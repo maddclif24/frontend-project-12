@@ -3,6 +3,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch, useStore } from 'react-redux';
+import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import {
   Modal, Form, Button, CloseButton,
@@ -27,6 +28,7 @@ const RemoveChannel = ({
       setShow(false);
       dispacth(viewActions.switchActiveChannel(1));
     });
+    toast.success('Канал удален');
   };
 
   return (
