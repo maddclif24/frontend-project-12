@@ -3,6 +3,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch, useStore } from 'react-redux';
+import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import {
   Modal, Form, Button, CloseButton,
@@ -36,6 +37,7 @@ const AddChannel = ({ show, close }) => {
         dispacth(viewActions.switchActiveChannel(payload.id));
         dispacth(channelActions.addNewChannel(payload));
       });
+      toast.success('Канал создан');
     },
   });
 

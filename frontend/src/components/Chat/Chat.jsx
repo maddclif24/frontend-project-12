@@ -3,6 +3,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Form } from 'react-bootstrap';
 import axios from 'axios';
 import { normalize, schema } from 'normalizr';
@@ -72,6 +74,7 @@ const Chat = () => {
         </div>
       </div>
     </div>
+    <ToastContainer />
   </div>
   );
 };
