@@ -10,6 +10,7 @@ import {
 } from 'react-bootstrap';
 import { io } from 'socket.io-client';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import { actions as channelActions } from '../../../slices/channelSlice.js';
 import { actions as viewActions } from '../../../slices/viewSlice.js';
 
@@ -22,6 +23,8 @@ const AddChannel = ({ show, close }) => {
     name: Yup.string()
       .max(20, 'От 3 до 20 символов'),
   });
+
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
@@ -37,7 +40,7 @@ const AddChannel = ({ show, close }) => {
         dispacth(viewActions.switchActiveChannel(payload.id));
         dispacth(channelActions.addNewChannel(payload));
       });
-      toast.success('Канал создан');
+      toast.success(t('tostify.successAdd'));
     },
   });
 
@@ -45,7 +48,7 @@ const AddChannel = ({ show, close }) => {
     <>
       <Modal show={show} onHide={close}>
         <Modal.Header closeButton>
-          <Modal.Title>Добавить канал</Modal.Title>
+          <Modal.Title>{t('chatPage.channels.modalAdd.title')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={formik.handleSubmit} id="ChannelSubmit">
@@ -63,10 +66,10 @@ const AddChannel = ({ show, close }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={close} variant="secondary">
-            Закрыть
+            {t('chatPage.channels.modalAdd.close')}
           </Button>
           <Button type="submit" form="ChannelSubmit" onClick={close} variant="primary">
-            Добавить
+            {t('chatPage.channels.modalAdd.submit')}
           </Button>
         </Modal.Footer>
       </Modal>

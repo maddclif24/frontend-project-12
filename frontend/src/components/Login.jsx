@@ -22,7 +22,7 @@ const LoginPage = () => {
   const navigation = useNavigate();
   const store = useSelector((state) => state.userCurrent);
   const dispatch = useDispatch();
-  const { t } = useTranslation('loginPage', { returnObjects: true });
+  const { t } = useTranslation();
 
   const loginSchema = Yup.object().shape({
     username: Yup.string()
@@ -74,7 +74,7 @@ const LoginPage = () => {
                     className="col-12 col-md-6 mt-3 mt-mb-0"
                     onSubmit={formik.handleSubmit}
                   >
-                    <h1 className="text-center mb-4">{t('title')}</h1>
+                    <h1 className="text-center mb-4">{t('loginPage.title')}</h1>
                     <Form.Group
                       className="form-floating mb-3"
                       controlId="formBasicEmail"
@@ -86,7 +86,7 @@ const LoginPage = () => {
                       >
                         <Form.Control
                           type="text"
-                          placeholder={t('username')}
+                          placeholder={t('loginPage.username')}
                           required
                           name="username"
                           value={formik.values.username}
@@ -113,7 +113,7 @@ const LoginPage = () => {
                         <Form.Control
                           type="password"
                           required
-                          placeholder={t('password')}
+                          placeholder={t('loginPage.password')}
                           name="password"
                           value={formik.values.password}
                           onChange={formik.handleChange}
@@ -140,8 +140,8 @@ const LoginPage = () => {
                 </div>
                 <div className="card-footer p-4">
                   <div className="text-center">
-                    <span>{t('footer.text')}</span>
-                    <a href="/signup">{t('footer.link')}</a>
+                    <span>{t('loginPage.footer.text')}</span>
+                    <a href="/signup">{t('loginPage.footer.link')}</a>
                   </div>
                 </div>
               </div>
