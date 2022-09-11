@@ -11,6 +11,7 @@ import { io } from 'socket.io-client';
 import { actions as messageSlice } from '../../slices/messageSlice.js';
 
 const socket = io('http://0.0.0.0:5001');
+const filter = require('leo-profanity');
 
 const InputChat = () => {
   const [disabled, setDisable] = useState(null);
@@ -32,7 +33,7 @@ const InputChat = () => {
       message: '',
     },
     onSubmit: (values) => {
-      const message = { body: values.message.trim(), channelId, username };
+      const message = { body: filter.clean(values.message.trim()), channelId, username };
       socket.emit('newMessage', message);
       socket.on('newMessage', (payload) => {
         dispatch(messageSlice.addNewMessage(payload));
