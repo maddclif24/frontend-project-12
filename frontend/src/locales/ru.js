@@ -1,40 +1,53 @@
 export default {
-  loginPage: {
-    title: 'Войти',
-    username: 'Ваш ник',
-    password: 'Ваш пароль',
-    footer: {
-      text: 'Нет аккаунта?',
-      link: 'Регистрация',
-    },
-  },
-  chatPage: {
-    channels: {
-      name: 'Каналы',
-      modalAdd: {
-        title: 'Добавить канал',
-        close: 'Закрыть',
-        submit: 'Добавить',
-      },
-      modalRename: {
-        name: 'Переименовать',
-        title: 'Переименовать канал',
-        close: 'Закрыть',
-        submit: 'Переименовать',
-      },
-      modalRemove: {
-        name: 'Удалить',
-        title: 'Удалить канал',
-        close: 'Закрыть',
-        submit: 'Удалить',
+  translation: {
+    loginPage: {
+      title: 'Войти',
+      username: 'Ваш ник',
+      password: 'Ваш пароль',
+      footer: {
+        text: 'Нет аккаунта?',
+        link: 'Регистрация',
       },
     },
-    form: {
-      header: {
-        channelName: '',
-        countMessages: '',
+    chatPage: {
+      channels: {
+        name: 'Каналы',
+        modalAdd: {
+          title: 'Добавить канал',
+          close: 'Закрыть',
+          submit: 'Отправить',
+        },
+        modalRename: {
+          name: 'Переименовать',
+          title: 'Переименовать канал',
+          close: 'Закрыть',
+          submit: 'Отправить',
+        },
+        modalRemove: {
+          name: 'Удалить',
+          title: 'Удалить канал',
+          close: 'Закрыть',
+          submit: 'Удалить',
+        },
       },
-      inputPlaceholder: 'Введите сообщение...',
+      form: {
+        header: {
+          channelName: '',
+          countMessages: '',
+        },
+        inputPlaceholder: 'Введите сообщение...',
+      },
+      messages: {
+        count_one: '{{count}} сообщение',
+        count_few: '{{count}} сообщения',
+        count_many: '{{count}} сообщений',
+      },
+      log_out: 'Выйти',
+    },
+    tostify: {
+      successRename: 'Канал переименован',
+      successRemove: 'Канал удален',
+      successAdd: 'Канал добавлен',
     },
   },
 };

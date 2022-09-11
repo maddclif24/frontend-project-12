@@ -9,6 +9,7 @@ import {
 } from 'react-bootstrap';
 import { io } from 'socket.io-client';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import {
   actions as channelActions,
@@ -23,6 +24,7 @@ const RenameChannel = ({
 }) => {
   const dispacth = useDispatch();
   const inputRef = useRef();
+  const { t } = useTranslation();
 
   const selectChannelName = useSelector((state) => channelSelectors.selectById(state, id)).name;
   const channelSchema = Yup.object().shape({
@@ -41,7 +43,7 @@ const RenameChannel = ({
         dispacth(channelActions.renameChannel({ id, changes: { ...payload } }));
       });
       setShow(false);
-      toast.success('Канал переименован');
+      toast.success(t('tostify.successRename'));
     },
   });
 

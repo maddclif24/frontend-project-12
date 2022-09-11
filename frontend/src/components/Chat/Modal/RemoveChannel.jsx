@@ -10,6 +10,7 @@ import {
 } from 'react-bootstrap';
 import { io } from 'socket.io-client';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import { actions as channelActions } from '../../../slices/channelSlice.js';
 import { actions as viewActions } from '../../../slices/viewSlice.js';
 
@@ -19,6 +20,7 @@ const RemoveChannel = ({
   show, close, id, setShow,
 }) => {
   // console.log(id);
+  const { t } = useTranslation();
   const dispacth = useDispatch();
   const removeChannel = (e) => {
     e.preventDefault();
@@ -28,7 +30,7 @@ const RemoveChannel = ({
       setShow(false);
       dispacth(viewActions.switchActiveChannel(1));
     });
-    toast.success('Канал удален');
+    toast.success(t('tostify.successRemove'));
   };
 
   return (

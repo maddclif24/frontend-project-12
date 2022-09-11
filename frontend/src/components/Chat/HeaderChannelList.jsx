@@ -10,11 +10,11 @@ const HeaderChannelList = () => {
 
   const handleClose = () => setShow(false);
 
-  const { t } = useTranslation('chatPage', { returnObjects: true });
+  const { t } = useTranslation();
   return (
     <>
     <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
-      <span>{t('channels.name')}</span>
+      <span>{t('chatPage.channels.name')}</span>
       <button type="button" onClick={handleClick} className="p-0 text-primary btn btn-group-vertical">
         <svg
           xmlns="http://www.w3.org/2000/svg"

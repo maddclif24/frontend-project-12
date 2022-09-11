@@ -34,7 +34,7 @@ const Channel = ({ channel }) => {
     activeChannel === channel.id ? 'btn-secondary' : '',
   );
 
-  const { t } = useTranslation('chatPage', { returnObjects: true });
+  const { t } = useTranslation();
 
   const button = (
     <button
@@ -57,9 +57,9 @@ const Channel = ({ channel }) => {
       <Dropdown.Toggle split variant="outline-secondary" id="dropdown-split-basic" />
 
       <Dropdown.Menu>
-        <Dropdown.Item href="#" onClick={handleClickRemove}>{t('channels.modalRemove.name')}</Dropdown.Item>
+        <Dropdown.Item href="#" onClick={handleClickRemove}>{t('chatPage.channels.modalRemove.name')}</Dropdown.Item>
         { isShowRemove ? <RemoveChannel show={isShowRemove} setShow={setShowRemove} id={button.props.id} close={handleCloseRemove}/> : null }
-        <Dropdown.Item href="#" onClick={handleClick}>{t('channels.modalRename.name')}</Dropdown.Item>
+        <Dropdown.Item href="#" onClick={handleClick}>{t('chatPage.channels.modalRename.name')}</Dropdown.Item>
         {isShowRename ? <RenameChannel show={isShowRename} setShow={setShowRename} id={button.props.id} close={handleClose}/> : null }
       </Dropdown.Menu>
     </Dropdown>
