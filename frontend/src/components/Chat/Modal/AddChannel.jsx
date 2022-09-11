@@ -48,7 +48,7 @@ const AddChannel = ({ show, close }) => {
     <>
       <Modal show={show} onHide={close}>
         <Modal.Header closeButton>
-          <Modal.Title>Добавить канал</Modal.Title>
+          <Modal.Title>{t('chatPage.channels.modalAdd.title')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={formik.handleSubmit} id="ChannelSubmit">
@@ -66,10 +66,10 @@ const AddChannel = ({ show, close }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={close} variant="secondary">
-            Закрыть
+            {t('chatPage.channels.modalAdd.close')}
           </Button>
           <Button type="submit" form="ChannelSubmit" onClick={close} variant="primary">
-            Добавить
+            {t('chatPage.channels.modalAdd.submit')}
           </Button>
         </Modal.Footer>
       </Modal>

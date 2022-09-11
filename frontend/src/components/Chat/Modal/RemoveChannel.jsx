@@ -34,20 +34,20 @@ const RemoveChannel = ({
   };
 
   return (
-      <Modal show={show} onHide={close}>
+    <Modal show={show} onHide={close}>
       <Modal.Header closeButton>
-          <Modal.Title>Удалить канал</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Вы уверены?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={close}>
-            Закрыть
-          </Button>
-          <Button variant="danger" onClick={removeChannel}>
-            Удалить
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        <Modal.Title> {t('chatPage.channels.modalRemove.title')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>{t('chatPage.channels.modalRemove.body')}</Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={close}>
+        {t('chatPage.channels.modalRemove.close')}
+        </Button>
+        <Button variant="danger" onClick={removeChannel}>
+        {t('chatPage.channels.modalRemove.submit')}
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 export default RemoveChannel;

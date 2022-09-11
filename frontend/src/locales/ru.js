@@ -26,6 +26,7 @@ export default {
         modalRemove: {
           name: 'Удалить',
           title: 'Удалить канал',
+          body: 'Вы уверены?',
           close: 'Закрыть',
           submit: 'Удалить',
         },

@@ -56,7 +56,7 @@ const RenameChannel = ({
   return (
     <Modal show={show} onHide={close}>
       <Modal.Header closeButton>
-        <Modal.Title>Переименовать Канал</Modal.Title>
+        <Modal.Title>{t('chatPage.channels.modalRename.title')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit} id="ChannelSubmit">
@@ -73,10 +73,10 @@ const RenameChannel = ({
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={close} variant="secondary">
-          Закрыть
+        {t('chatPage.channels.modalRename.close')}
         </Button>
         <Button type="submit" form="ChannelSubmit" variant="primary">
-          Добавить
+        {t('chatPage.channels.modalRename.submit')}
         </Button>
       </Modal.Footer>
     </Modal>
