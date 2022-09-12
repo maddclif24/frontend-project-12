@@ -10,6 +10,7 @@ import {
 import { io } from 'socket.io-client';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import cn from 'classnames';
 import * as Yup from 'yup';
 import {
   actions as channelActions,
@@ -27,8 +28,14 @@ const RenameChannel = ({
   const { t } = useTranslation();
 
   const selectChannelName = useSelector((state) => channelSelectors.selectById(state, id)).name;
+  const channels = useSelector(channelSelectors.selectAll);
+  const channelsNames = channels.map((channel) => channel.name);
+
   const channelSchema = Yup.object().shape({
-    name: Yup.string().max(20, 'От 3 до 20 символов'),
+    name: Yup.string()
+      .min(3, 'От 3 до 20 символов')
+      .max(20)
+      .notOneOf(channelsNames, 'Должен быть уникальным'),
   });
 
   const formik = useFormik({
@@ -67,7 +74,12 @@ const RenameChannel = ({
               onChange={formik.handleChange}
               value={formik.values.name}
               ref={inputRef}
+              className={cn(
+                'form-control',
+                formik.errors.name ? 'is-invalid' : 'valid',
+              )}
             />
+            { formik.errors?.name ? <div className="invalid-feedback">{formik.errors.name}</div> : null}
           </Form.Group>
         </Form>
       </Modal.Body>
