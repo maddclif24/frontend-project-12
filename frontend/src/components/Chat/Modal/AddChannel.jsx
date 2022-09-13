@@ -50,7 +50,6 @@ const AddChannel = ({ show, close }) => {
       toast.success(t('tostify.successAdd'));
     },
   });
-  console.log(formik.errors);
 
   return (
     <>
