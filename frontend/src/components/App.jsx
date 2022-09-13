@@ -28,17 +28,19 @@ import store from "../slices/index.js";
 import { actions as loginActions } from "../slices/loginSlice.js";
 
 const AuthProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const dispatch = useDispatch();
+  const [loggedIn, setLoggedIn] = useState(null);
+
   const logIn = () => setLoggedIn(true);
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const logOut = () => {
+    console.log('Пользователь вышел');
     localStorage.removeItem("user");
-    dispatch(loginActions.logOutReducee(false));
     setLoggedIn(false);
   };
 
   return (
-    <AuthContext.Provider value={{ loggedIn, logIn, logOut }}>
+    <AuthContext.Provider value={{ loggedIn, logIn, logOut, user }}>
       {children}
     </AuthContext.Provider>
   );
@@ -47,9 +49,8 @@ const AuthProvider = ({ children }) => {
 const PrivateRoute = ({ children }) => {
   const auth = useAuth();
   const location = useLocation();
-  const user = JSON.parse(localStorage.getItem("user"));
-  // Пофиксить авторизацию v2
-  return auth.loggedIn || user ? (
+
+  return auth.user ? (
     children
   ) : (
     <Navigate to="/login" state={{ from: location }} />

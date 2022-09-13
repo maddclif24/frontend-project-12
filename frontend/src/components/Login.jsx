@@ -12,6 +12,7 @@ import * as Yup from "yup";
 import cn from "classnames";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import routes from "../routes";
 import useAuth from "../hooks/index.jsx";
 import { loginUser, selectors } from "../slices/loginSlice.js";
@@ -21,7 +22,7 @@ const LoginPage = () => {
   const auth = useAuth();
   const navigation = useNavigate();
   const store = useSelector((state) => state.userCurrent);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const loginSchema = Yup.object().shape({
@@ -39,8 +40,17 @@ const LoginPage = () => {
       password: "",
     },
     validationSchema: loginSchema,
-    onSubmit: (values) => {
-      dispatch(loginUser(values));
+    onSubmit: async (values) => {
+      // dispatch(loginUser(values));
+      try {
+        const { data } = await axios.post(routes.loginPath(), values);
+        localStorage.setItem('user', JSON.stringify(data));
+        auth.logIn();
+        navigation('/', { replace: true });
+        // toast.success('Пользователь вошел');
+      } catch (e) {
+        console.log(e);
+      }
     },
   });
 
@@ -51,11 +61,6 @@ const LoginPage = () => {
       the username or password is incorrect
     </Form.Text>
   );
-
-  if (store.login) {
-    auth.logIn();
-    navigation('/', { replace: true });
-  }
 
   useEffect(() => {
     ref.current.focus();
