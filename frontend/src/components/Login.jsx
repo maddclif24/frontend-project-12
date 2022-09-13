@@ -18,7 +18,7 @@ import useAuth from "../hooks/index.jsx";
 import { loginUser, selectors } from "../slices/loginSlice.js";
 
 const LoginPage = () => {
-  const [successAuth, setSuccessAuth] = useState(" ");
+  const [successAuth, setSuccessAuth] = useState(' ');
   const auth = useAuth();
   const navigation = useNavigate();
   const store = useSelector((state) => state.userCurrent);
@@ -39,28 +39,23 @@ const LoginPage = () => {
       username: "",
       password: "",
     },
-    validationSchema: loginSchema,
+    // validationSchema: loginSchema,
     onSubmit: async (values) => {
       // dispatch(loginUser(values));
       try {
         const { data } = await axios.post(routes.loginPath(), values);
         localStorage.setItem('user', JSON.stringify(data));
         auth.logIn();
+        setSuccessAuth(true);
         navigation('/', { replace: true });
-        // toast.success('Пользователь вошел');
+        toast.info('Пользователь вошел');
       } catch (e) {
-        console.log(e);
+        setSuccessAuth(false);
       }
     },
   });
 
   const ref = useRef(null);
-
-  const errorAuth = (
-    <Form.Text className="text-danger">
-      the username or password is incorrect
-    </Form.Text>
-  );
 
   useEffect(() => {
     ref.current.focus();
@@ -98,7 +93,7 @@ const LoginPage = () => {
                           onChange={formik.handleChange}
                           className={cn(
                             "form-control",
-                            store.error?.statusCode ? "is-invalid" : "valid",
+                            successAuth ? "valid" : "is-invalid",
                           )}
                           ref={ref}
                         />
@@ -124,10 +119,10 @@ const LoginPage = () => {
                           onChange={formik.handleChange}
                           className={cn(
                             "form-control",
-                            store.error?.statusCode ? "is-invalid" : "valid",
+                            successAuth ? "valid" : "is-invalid",
                           )}
                         />
-                        {store.error?.statusCode ? (
+                        {!successAuth ? (
                           <div className="invalid-tooltip">
                             Неверное имя пользователя или пароль
                           </div>

@@ -6,6 +6,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch, useStore } from "react-redux";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import cn from "classnames";
@@ -16,9 +17,10 @@ import useAuth from "../hooks/index.jsx";
 import { loginUser, signupUser, selectors } from "../slices/loginSlice.js";
 
 const SingUpPage = () => {
+  const [successAuth, setSuccessAuth] = useState(' ');
   const ref = useRef(null);
+  const { t } = useTranslation();
 
-  const dispatch = useDispatch();
   const navigation = useNavigate();
   const auth = useAuth();
 
@@ -43,17 +45,19 @@ const SingUpPage = () => {
       confirm: "",
     },
     validationSchema: signUpSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
       const { username, password } = values;
-      dispatch(signupUser({ username, password }));
+      try {
+        const { data } = await axios.post(routes.signupPath(), { username, password });
+        localStorage.setItem('user', JSON.stringify(data));
+        auth.logIn();
+        setSuccessAuth(true);
+        navigation('/', { replace: true });
+      } catch (e) {
+        setSuccessAuth(false);
+      }
     },
   });
-
-  if (store.login) {
-    auth.logIn();
-    navigation('/', { replace: true });
-  }
 
   return (
     <div className="h-100">
@@ -68,25 +72,25 @@ const SingUpPage = () => {
                     className="col-12 col-md-6 mt-3 mt-mb-0"
                     onSubmit={f.handleSubmit}
                   >
-                    <h1 className="text-center mb-4">Регистрация</h1>
+                    <h1 className="text-center mb-4">{t('signup.title')}</h1>
                     <Form.Group
                       className="form-floating mb-3"
                       controlId="formBasicEmail"
                     >
                       <FloatingLabel
                         controlId="username"
-                        label="Имя пользователя"
+                        label={t('signup.username')}
                         className="mb-3"
                       >
                         <Form.Control
                           type="text"
-                          placeholder="Имя пользователя"
+                          placeholder={t('signup.username')}
                           required
                           onChange={f.handleChange}
                           name="username"
                           className={cn(
                             "form-control",
-                            f.errors.username || store.error?.statusCode ? "is-invalid" : "valid",
+                            f.errors.username || !successAuth ? "is-invalid" : "valid",
                           )}
                         />
                         {f.errors.username ? (
@@ -103,19 +107,19 @@ const SingUpPage = () => {
                     >
                       <FloatingLabel
                         controlId="password"
-                        label="Пароль"
+                        label={t('signup.password')}
                         className="mb-3"
                         type="password"
                       >
                         <Form.Control
                           type="password"
                           required
-                          placeholder="Пароль"
+                          placeholder={t('signup.password')}
                           name="password"
                           onChange={f.handleChange}
                           className={cn(
                             "form-control",
-                            f.errors.password || store.error?.statusCode ? "is-invalid" : "valid",
+                            f.errors.password || !successAuth ? "is-invalid" : "valid",
                           )}
                         />
                         {f.errors.password ? (
@@ -131,18 +135,18 @@ const SingUpPage = () => {
                     >
                       <FloatingLabel
                         controlId="confirm"
-                        label="Подтвердите пароль"
+                        label={t('signup.confirm_password')}
                         className="mb-3"
                       >
                         <Form.Control
-                          type="confirm"
-                          placeholder="Подтвердите пароль"
+                          type="password"
+                          placeholder={t('signup.confirm_password')}
                           required
                           name="confirm"
                           onChange={f.handleChange}
                           className={cn(
                             "form-control",
-                            f.errors.confirm || store.error?.statusCode ? "is-invalid" : "valid",
+                            f.errors.confirm || !successAuth ? "is-invalid" : "valid",
                           )}
                         />
                         {f.errors.confirm ? (
@@ -150,7 +154,7 @@ const SingUpPage = () => {
                             {f.errors.confirm}
                           </div>
                         ) : null}
-                        {store.error?.statusCode ? (
+                        {!successAuth ? (
                           <div className="invalid-tooltip">
                             Такой пользователь уже существует
                           </div>

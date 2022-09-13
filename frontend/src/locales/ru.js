@@ -50,5 +50,12 @@ export default {
       successRemove: 'Канал удален',
       successAdd: 'Канал добавлен',
     },
+    signup: {
+      title: 'Регистрация',
+      username: 'Имя пользователя',
+      password: 'Пароль',
+      confirm_password: 'Подтвердите пароль',
+      submit: 'Зарегистрироваться',
+    },
   },
 };
