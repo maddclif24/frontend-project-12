@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector, useDispatch, useStore } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import {
   Modal, Form, Button, CloseButton,
@@ -18,7 +18,7 @@ import {
 } from '../../../slices/channelSlice.js';
 import { actions as viewActions } from '../../../slices/viewSlice.js';
 
-const socket = io('http://0.0.0.0:5001');
+// const socket = io('http://0.0.0.0:5001');
 
 const RenameChannel = ({
   show, close, id, setShow,
@@ -45,10 +45,11 @@ const RenameChannel = ({
     validationSchema: channelSchema,
     onSubmit: (values) => {
       const channel = { id, name: values.name.trim() };
-      socket.emit('renameChannel', channel);
+      /* socket.emit('renameChannel', channel);
       socket.on('renameChannel', (payload) => {
         dispacth(channelActions.renameChannel({ id, changes: { ...payload } }));
       });
+      */
       setShow(false);
       toast.success(t('tostify.successRename'));
     },

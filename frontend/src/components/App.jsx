@@ -3,8 +3,6 @@
 /* eslint-disable quotes */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, Provider } from "react-redux";
-
 import {
   BrowserRouter as Router,
   Routes,
@@ -24,7 +22,7 @@ import routes from "../routes.js";
 import AuthContext from "../contexts/index.jsx";
 import useAuth from "../hooks/index.jsx";
 import Chat from "./Chat/Chat.jsx";
-import store from "../slices/index.js";
+import store from '../slices/index.js';
 import { actions as loginActions } from "../slices/loginSlice.js";
 
 const AuthProvider = ({ children }) => {
@@ -60,7 +58,6 @@ const PrivateRoute = ({ children }) => {
 function App() {
   return (
     <BrowserRouter>
-      <Provider store={store}>
         <AuthProvider>
           <Navbar />
           <Routes>
@@ -81,7 +78,6 @@ function App() {
             />
           </Routes>
         </AuthProvider>
-      </Provider>
     </BrowserRouter>
   );
 }

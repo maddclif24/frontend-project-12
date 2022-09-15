@@ -9,8 +9,9 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { io } from 'socket.io-client';
 import { actions as messageSlice } from '../../slices/messageSlice.js';
+import useChat from '../../hooks/useChat.jsx';
 
-const socket = io('http://0.0.0.0:5001');
+// const socket = io('http://0.0.0.0:5001');
 const filter = require('leo-profanity');
 
 const InputChat = () => {
@@ -19,6 +20,7 @@ const InputChat = () => {
   const ref = useRef();
   const resetForm = useRef();
   const { t } = useTranslation('chatPage', { returnObjects: true });
+  const { newMessage } = useChat();
 
   useEffect(() => {
     ref.current.focus();
@@ -34,11 +36,14 @@ const InputChat = () => {
     },
     onSubmit: (values) => {
       const message = { body: filter.clean(values.message.trim()), channelId, username };
-      socket.emit('newMessage', message);
+      newMessage(message);
+      ref.current.value = '';
+      /* socket.emit('newMessage', message);
       socket.on('newMessage', (payload) => {
         dispatch(messageSlice.addNewMessage(payload));
         ref.current.value = '';
       });
+      */
     },
   });
 

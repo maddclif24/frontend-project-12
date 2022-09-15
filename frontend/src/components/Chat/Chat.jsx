@@ -67,7 +67,6 @@ const Chat = () => {
       <ChannelList />
       <div className="col p-0 h-100">
         <div className="d-flex flex-column h-100">
-          { /* <Title currentChannel={store} /> */ }
           <HeaderChatList />
           <Messeges />
           <InputChat />

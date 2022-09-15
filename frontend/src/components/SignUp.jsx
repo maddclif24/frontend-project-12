@@ -4,7 +4,7 @@
 /* eslint-disable padded-blocks */
 
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector, useDispatch, useStore } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useFormik } from "formik";
@@ -37,7 +37,6 @@ const SingUpPage = () => {
     ),
   });
 
-  const store = useSelector((state) => state.userCurrent);
   const f = useFormik({
     initialValues: {
       username: "",
