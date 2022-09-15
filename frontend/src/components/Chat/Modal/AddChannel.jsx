@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef } from 'react';
-import { useSelector, useDispatch, useStore } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import cn from 'classnames';
@@ -17,8 +17,9 @@ import {
   actions as channelActions,
 } from '../../../slices/channelSlice.js';
 import { actions as viewActions } from '../../../slices/viewSlice.js';
+import useChat from '../../../hooks/useChat.jsx';
 
-const socket = io();
+// const socket = io();
 
 const AddChannel = ({ show, close }) => {
   const dispacth = useDispatch();
@@ -34,18 +35,23 @@ const AddChannel = ({ show, close }) => {
   });
   const { t } = useTranslation();
 
+  const { newChannel } = useChat();
+
   const formik = useFormik({
     initialValues: {
       name: '',
     },
     validationSchema: channelSchema,
     onSubmit: (values) => {
-      const channel = { name: values.name.trim() };
-      socket.emit('newChannel', channel);
+      const { username } = JSON.parse(localStorage.getItem('user'));
+      const channel = { name: values.name.trim(), username };
+      newChannel(channel);
+      /* socket.emit('newChannel', channel);
       socket.on('newChannel', (payload) => {
         dispacth(viewActions.switchActiveChannel(payload.id));
         dispacth(channelActions.addNewChannel(payload));
       });
+      */
       close();
       toast.success(t('tostify.successAdd'));
     },

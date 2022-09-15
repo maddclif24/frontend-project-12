@@ -13,7 +13,7 @@ import { actions as viewActions } from '../../slices/viewSlice.js';
 import RenameChannel from './Modal/RenameChannel.jsx';
 import RemoveChannel from './Modal/RemoveChannel.jsx';
 
-const Channel = ({ channel }) => {
+const Channel = ({ channel, user }) => {
   const [isShowRename, setShowRename] = useState(false);
   const [isShowRemove, setShowRemove] = useState(false);
   const handleClick = () => setShowRename(true);
@@ -26,6 +26,7 @@ const Channel = ({ channel }) => {
 
   const dispatch = useDispatch();
   const activeChannel = useSelector((state) => state.viewSlice.activeChannelId);
+  console.log(channel, user);
   const cnButton = cn(
     'w-100',
     'rounded-0',

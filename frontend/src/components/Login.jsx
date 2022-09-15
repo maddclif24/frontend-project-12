@@ -4,7 +4,7 @@
 /* eslint-disable padded-blocks */
 
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector, useDispatch, useStore } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 import { useFormik } from "formik";
 import { useTranslation } from 'react-i18next';
@@ -21,7 +21,6 @@ const LoginPage = () => {
   const [successAuth, setSuccessAuth] = useState(' ');
   const auth = useAuth();
   const navigation = useNavigate();
-  const store = useSelector((state) => state.userCurrent);
   // const dispatch = useDispatch();
   const { t } = useTranslation();
 
