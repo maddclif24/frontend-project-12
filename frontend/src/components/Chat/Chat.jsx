@@ -48,15 +48,17 @@ const Chat = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { token } = JSON.parse(localStorage.getItem('user', 'token'));
-      const { data } = await axios.get(routes.dataPath(), { headers: { Authorization: `Bearer ${token}` } });
-      const channels = getNormalalized(data.channels);
-      const messages = getNormalalized(data.messages);
-      // const { channels } = normalizedChannels.entities;
-      // const { messages } = normalizedDataMessages.entities;
-      dispatch(channelActions.addChannels(channels));
-      dispatch(viewActions.setActiveChannelId(data.currentChannelId));
-      dispatch(messageSlice.addMessages(messages));
+      try {
+        const { token } = JSON.parse(localStorage.getItem('user', 'token'));
+        const { data } = await axios.get(routes.dataPath(), { headers: { Authorization: `Bearer ${token}` } });
+        const channels = getNormalalized(data.channels);
+        const messages = getNormalalized(data.messages);
+        dispatch(channelActions.addChannels(channels));
+        dispatch(viewActions.setActiveChannelId(data.currentChannelId));
+        dispatch(messageSlice.addMessages(messages));
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchData();
   }, []);
@@ -73,7 +75,6 @@ const Chat = () => {
         </div>
       </div>
     </div>
-    <ToastContainer />
   </div>
   );
 };

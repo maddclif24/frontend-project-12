@@ -49,7 +49,9 @@ const LoginPage = () => {
         navigation('/', { replace: true });
         toast.info('Пользователь вошел');
       } catch (e) {
-        setSuccessAuth(false);
+        if (e.message === 'Network Error') {
+          toast.error(t('tostify.errors.network'));
+        } else setSuccessAuth(false);
       }
     },
   });
