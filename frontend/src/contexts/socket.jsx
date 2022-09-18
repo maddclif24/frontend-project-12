@@ -20,21 +20,25 @@ const SocketProvider = ({ socket, children }) => {
     dispatch(viewAction.switchActiveChannel(payload.id));
   });
 
-  /* socket.on('renameChannel', (data) => {
-    const { id, name } = data;
-    dispatch(channelUpdated({ id, changes: { name } }));
+  socket.on('renameChannel', (payload) => {
+    const { id } = payload;
+    dispatch(channelAction.renameChannel({ id, changes: { ...payload } }));
   });
 
-  socket.on('removeChannel', ({ id }) => {
-    dispatch(channelRemoved(id));
+  socket.on('removeChannel', (payload) => {
+    dispatch(channelAction.removeChannel(payload));
   });
-  */
+
   const newChannel = (channel) => socket.emit('newChannel', channel);
   const newMessage = (message) => socket.emit('newMessage', message);
+  const removeChannel = (id) => socket.emit('removeChannel', { id });
+  const renameChannel = (channel) => socket.emit('renameChannel', channel);
 
   const socketHandles = {
     newMessage,
     newChannel,
+    removeChannel,
+    renameChannel,
   };
 
   return (
