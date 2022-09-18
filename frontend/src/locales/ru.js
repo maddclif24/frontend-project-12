@@ -49,6 +49,10 @@ export default {
       successRename: 'Канал переименован',
       successRemove: 'Канал удален',
       successAdd: 'Канал добавлен',
+      errors: {
+        connection: 'Ошибка подключения',
+        network: 'Ошибка сети',
+      },
     },
     signup: {
       title: 'Регистрация',

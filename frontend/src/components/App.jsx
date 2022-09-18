@@ -13,6 +13,8 @@ import {
   BrowserRouter,
 } from "react-router-dom";
 
+import { ToastContainer } from "react-toastify";
+
 import LoginPage from "./Login.jsx";
 import NotFoundPage from "./Not_FoundPage.jsx";
 import SingUpPage from "./SignUp.jsx";
@@ -77,6 +79,7 @@ function App() {
               }
             />
           </Routes>
+          <ToastContainer />
         </AuthProvider>
     </BrowserRouter>
   );
