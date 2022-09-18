@@ -20,6 +20,14 @@ const init = async () => {
     debug: true,
   });
 
+  const rollbarConfig = {
+    accessToken: "fb6d1b8e986845b9a7c5141a292ee6a5",
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+    payload: {
+      environment: "production",
+    },
+  };
   const socket = io();
   // const socket = 'Какой-то текст';
   const root = ReactDOM.createRoot(document.getElementById("root"));
