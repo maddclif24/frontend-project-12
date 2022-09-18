@@ -11,6 +11,7 @@ import {
 import { io } from 'socket.io-client';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import useChat from '../../../hooks/useChat.jsx';
 import { actions as channelActions } from '../../../slices/channelSlice.js';
 import { actions as viewActions } from '../../../slices/viewSlice.js';
 
@@ -22,7 +23,8 @@ const RemoveChannel = ({
   // console.log(id);
   const { t } = useTranslation();
   const dispacth = useDispatch();
-  const removeChannel = (e) => {
+  const { removeChannel } = useChat();
+  const handleRemoveChannel = (e) => {
     e.preventDefault();
     /* socket.emit('removeChannel', { id });
     socket.on('removeChannel', (payload) => {
@@ -31,6 +33,8 @@ const RemoveChannel = ({
       dispacth(viewActions.switchActiveChannel(1));
     });
     */
+    removeChannel(id);
+    close();
     toast.success(t('tostify.successRemove'));
   };
 
@@ -44,7 +48,7 @@ const RemoveChannel = ({
         <Button variant="secondary" onClick={close}>
         {t('chatPage.channels.modalRemove.close')}
         </Button>
-        <Button variant="danger" onClick={removeChannel}>
+        <Button variant="danger" onClick={handleRemoveChannel}>
         {t('chatPage.channels.modalRemove.submit')}
         </Button>
       </Modal.Footer>

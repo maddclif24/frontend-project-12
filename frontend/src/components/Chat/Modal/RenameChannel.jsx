@@ -16,6 +16,7 @@ import {
   actions as channelActions,
   selectors as channelSelectors,
 } from '../../../slices/channelSlice.js';
+import useChat from '../../../hooks/useChat.jsx';
 import { actions as viewActions } from '../../../slices/viewSlice.js';
 
 // const socket = io('http://0.0.0.0:5001');
@@ -26,6 +27,7 @@ const RenameChannel = ({
   const dispacth = useDispatch();
   const inputRef = useRef();
   const { t } = useTranslation();
+  const { renameChannel } = useChat();
 
   const selectChannelName = useSelector((state) => channelSelectors.selectById(state, id)).name;
   const channels = useSelector(channelSelectors.selectAll);
@@ -45,12 +47,13 @@ const RenameChannel = ({
     validationSchema: channelSchema,
     onSubmit: (values) => {
       const channel = { id, name: values.name.trim() };
+      renameChannel(channel);
       /* socket.emit('renameChannel', channel);
       socket.on('renameChannel', (payload) => {
         dispacth(channelActions.renameChannel({ id, changes: { ...payload } }));
       });
       */
-      setShow(false);
+      close();
       toast.success(t('tostify.successRename'));
     },
   });
