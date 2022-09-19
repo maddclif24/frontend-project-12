@@ -24,7 +24,7 @@ import routes from "../routes.js";
 import AuthContext from "../contexts/index.jsx";
 import useAuth from "../hooks/index.jsx";
 import Chat from "./Chat/Chat.jsx";
-import store from '../slices/index.js';
+import store from "../slices/index.js";
 import { actions as loginActions } from "../slices/loginSlice.js";
 
 const AuthProvider = ({ children }) => {
@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const logOut = () => {
-    console.log('Пользователь вышел');
+    console.log("Пользователь вышел");
     localStorage.removeItem("user");
     setLoggedIn(false);
   };
@@ -60,27 +60,24 @@ const PrivateRoute = ({ children }) => {
 function App() {
   return (
     <BrowserRouter>
-        <AuthProvider>
-          <Navbar />
-          <Routes>
-            {/* <Route path="/" element={<Chat />} /> */}
-            <Route
-              path={routes.loginPagePath()}
-              element={<LoginPage />}
-            />
-            <Route path={routes.signupPagePath()} element={<SingUpPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-            <Route
-              path="/"
-              element={
-                <PrivateRoute>
-                  <Chat />
-                </PrivateRoute>
-              }
-            />
-          </Routes>
-          <ToastContainer />
-        </AuthProvider>
+      <AuthProvider>
+        <Navbar />
+        <Routes>
+          {/* <Route path="/" element={<Chat />} /> */}
+          <Route path={routes.loginPagePath()} element={<LoginPage />} />
+          <Route path={routes.signupPagePath()} element={<SingUpPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <Chat />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+        <ToastContainer />
+      </AuthProvider>
     </BrowserRouter>
   );
 }

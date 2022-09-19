@@ -41,8 +41,7 @@ const Channel = ({ channel, user }) => {
     <button
       type="button"
       id={channel.id}
-      onClick={() => dispatch(viewActions.switchActiveChannel(Number(channel.id)))
-      }
+      onClick={() => dispatch(viewActions.switchActiveChannel(Number(channel.id)))}
       className={cnButton}
     >
       <span className="me-1">#</span>
@@ -54,22 +53,41 @@ const Channel = ({ channel, user }) => {
     <Dropdown as={ButtonGroup}>
       {button}
 
-      <Dropdown.Toggle split variant="outline-secondary" id="dropdown-split-basic">
-      <span className="visually-hidden">Управление каналом</span>
-      </ Dropdown.Toggle>
+      <Dropdown.Toggle
+        split
+        variant="outline-secondary"
+        id="dropdown-split-basic"
+      >
+        <span className="visually-hidden">Управление каналом</span>
+      </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item href="#" onClick={handleClickRemove}>{t('chatPage.channels.modalRemove.name')}</Dropdown.Item>
-        { isShowRemove ? <RemoveChannel show={isShowRemove} setShow={setShowRemove} id={button.props.id} close={handleCloseRemove}/> : null }
-        <Dropdown.Item href="#" onClick={handleClick}>{t('chatPage.channels.modalRename.name')}
+        <Dropdown.Item href="#" onClick={handleClickRemove}>
+          {t('chatPage.channels.modalRemove.name')}
         </Dropdown.Item>
-        {isShowRename ? <RenameChannel show={isShowRename} setShow={setShowRename} id={button.props.id} close={handleClose}/> : null }
+        {isShowRemove ? (
+          <RemoveChannel
+            show={isShowRemove}
+            setShow={setShowRemove}
+            id={button.props.id}
+            close={handleCloseRemove}
+          />
+        ) : null}
+        <Dropdown.Item href="#" onClick={handleClick}>
+          {t('chatPage.channels.modalRename.name')}
+        </Dropdown.Item>
+        {isShowRename ? (
+          <RenameChannel
+            show={isShowRename}
+            setShow={setShowRename}
+            id={button.props.id}
+            close={handleClose}
+          />
+        ) : null}
       </Dropdown.Menu>
     </Dropdown>
   );
-  return (
-    channel.removable ? dropDown : button
-  );
+  return channel.removable ? dropDown : button;
   /* return (
     <Dropdown as={ButtonGroup}>
       <li className="nav-item w-100">
