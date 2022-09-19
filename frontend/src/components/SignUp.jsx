@@ -26,14 +26,14 @@ const SingUpPage = () => {
 
   const signUpSchema = Yup.object().shape({
     username: Yup.string()
-      .min(3, "Не менее 3 символов")
+      .min(3, "От 3 до 20 символов")
       .max(20, "До 20 символов"),
     password: Yup.string()
       .min(6, "Не менее 6 символов")
       .max(25, "До 25 символов"),
     confirm: Yup.string().oneOf(
       [Yup.ref("password"), null],
-      "Пароли не совпадают",
+      "Пароли должны совпадать",
     ),
   });
 
