@@ -51,20 +51,21 @@ const Channel = ({ channel, user }) => {
   );
 
   const dropDown = (
-    <>
     <Dropdown as={ButtonGroup}>
       {button}
 
-      <Dropdown.Toggle split variant="outline-secondary" id="dropdown-split-basic" />
+      <Dropdown.Toggle split variant="outline-secondary" id="dropdown-split-basic">
+      <span className="visually-hidden">Управление каналом</span>
+      </ Dropdown.Toggle>
 
       <Dropdown.Menu>
         <Dropdown.Item href="#" onClick={handleClickRemove}>{t('chatPage.channels.modalRemove.name')}</Dropdown.Item>
         { isShowRemove ? <RemoveChannel show={isShowRemove} setShow={setShowRemove} id={button.props.id} close={handleCloseRemove}/> : null }
-        <Dropdown.Item href="#" onClick={handleClick}>{t('chatPage.channels.modalRename.name')}</Dropdown.Item>
+        <Dropdown.Item href="#" onClick={handleClick}>{t('chatPage.channels.modalRename.name')}
+        </Dropdown.Item>
         {isShowRename ? <RenameChannel show={isShowRename} setShow={setShowRename} id={button.props.id} close={handleClose}/> : null }
       </Dropdown.Menu>
     </Dropdown>
-    </>
   );
   return (
     channel.removable ? dropDown : button

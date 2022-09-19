@@ -72,13 +72,6 @@ const RenameChannel = ({
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit} id="ChannelSubmit">
           <Form.Group className="mb-3">
-          <FloatingLabel
-                controlId="name"
-                label='"Управление каналом"'
-                className="visually-hidden"
-              >
-
-              </FloatingLabel>
             <Form.Control
               name="name"
               required
