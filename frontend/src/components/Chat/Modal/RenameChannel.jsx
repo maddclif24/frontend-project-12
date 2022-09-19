@@ -74,7 +74,7 @@ const RenameChannel = ({
           <Form.Group className="mb-3">
           <FloatingLabel
                 controlId="name"
-                label="Управление каналом"
+                label='"Управление каналом"'
                 className="visually-hidden"
               >
 
