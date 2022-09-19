@@ -10,7 +10,6 @@
     "build": "npm run build --prefix frontend",
     "postinstall": "cd frontend && npm ci"
   },
-  "proxy": "http://0.0.0.0:5001/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/maddclif24/frontend-project-12.git"
