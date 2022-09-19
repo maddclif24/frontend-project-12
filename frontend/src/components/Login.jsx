@@ -47,7 +47,7 @@ const LoginPage = () => {
         auth.logIn();
         setSuccessAuth(true);
         navigation('/', { replace: true });
-        toast.info('Пользователь вошел');
+        // toast.info('Пользователь вошел');
       } catch (e) {
         if (e.message === 'Network Error') {
           toast.error(t('tostify.errors.network'));
