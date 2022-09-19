@@ -50,7 +50,9 @@ const Chat = () => {
     const fetchData = async () => {
       try {
         const { token } = JSON.parse(localStorage.getItem('user', 'token'));
-        const { data } = await axios.get(routes.dataPath(), { headers: { Authorization: `Bearer ${token}` } });
+        const { data } = await axios.get(routes.dataPath(), {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const channels = getNormalalized(data.channels);
         const messages = getNormalalized(data.messages);
         dispatch(channelActions.addChannels(channels));
@@ -61,21 +63,21 @@ const Chat = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   return (
-  <div className="container h-100 my-4 overflow-hidden rounded shadow">
-    <div className="row h-100 bg-white flex-md-row">
-      <ChannelList />
-      <div className="col p-0 h-100">
-        <div className="d-flex flex-column h-100">
-          <HeaderChatList />
-          <Messeges />
-          <InputChat />
+    <div className="container h-100 my-4 overflow-hidden rounded shadow">
+      <div className="row h-100 bg-white flex-md-row">
+        <ChannelList />
+        <div className="col p-0 h-100">
+          <div className="d-flex flex-column h-100">
+            <HeaderChatList />
+            <Messeges />
+            <InputChat />
+          </div>
         </div>
       </div>
     </div>
-  </div>
   );
 };
 

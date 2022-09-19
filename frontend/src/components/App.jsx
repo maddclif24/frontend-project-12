@@ -69,11 +69,11 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
           <Route
             path="/"
-            element={
+            element={(
               <PrivateRoute>
                 <Chat />
               </PrivateRoute>
-            }
+            )}
           />
         </Routes>
         <ToastContainer />
