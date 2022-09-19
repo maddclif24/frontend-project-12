@@ -10,7 +10,7 @@ const Navbar = () => {
   return (
     <BootstrapNavbar bg="white" expand="lg" className="shadow-sm">
       <div className="container">
-        <BootstrapNavbar.Brand as={Link} to="/">Home</BootstrapNavbar.Brand>
+        <BootstrapNavbar.Brand as={Link} to="/">Hexlet Chat</BootstrapNavbar.Brand>
         { user ? <Button onClick={logOut}>{t('chatPage.log_out')}</Button> : null }
       </div>
     </BootstrapNavbar>
