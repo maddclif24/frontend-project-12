@@ -7,7 +7,11 @@ import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import cn from 'classnames';
 import {
-  Modal, Form, Button, CloseButton,
+  Modal,
+  Form,
+  Button,
+  CloseButton,
+  FloatingLabel,
 } from 'react-bootstrap';
 import { io } from 'socket.io-client';
 import * as Yup from 'yup';
@@ -66,19 +70,27 @@ const AddChannel = ({ show, close }) => {
         <Modal.Body>
           <Form onSubmit={formik.handleSubmit} id="ChannelSubmit">
             <Form.Group className="mb-3" controlId="name">
-              <Form.Control
-                type="text"
-                autoFocus
-                name="name"
-                required
-                onChange={formik.handleChange}
-                value={formik.values.name}
-                className={cn(
-                  'form-control',
-                  formik.errors.name ? 'is-invalid' : 'valid',
-                )}
-              />
-              { formik.errors?.name ? <div className="invalid-feedback">{formik.errors.name}</div> : null}
+              <FloatingLabel
+                controlId="name"
+                label="Имя канала"
+                className="visually-hidden"
+              >
+                <Form.Control
+                  type="text"
+                  autoFocus
+                  name="name"
+                  required
+                  onChange={formik.handleChange}
+                  value={formik.values.name}
+                  className={cn(
+                    'form-control',
+                    formik.errors.name ? 'is-invalid' : 'valid',
+                  )}
+                />
+              </FloatingLabel>
+              {formik.errors?.name ? (
+                <div className="invalid-feedback">{formik.errors.name}</div>
+              ) : null}
             </Form.Group>
           </Form>
         </Modal.Body>
