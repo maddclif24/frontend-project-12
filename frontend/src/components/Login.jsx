@@ -125,7 +125,7 @@ const LoginPage = () => {
                         />
                         {!successAuth ? (
                           <div className="invalid-tooltip">
-                            Неверное имя пользователя или пароль
+                            Неверные имя пользователя или пароль
                           </div>
                         ) : null}
                       </FloatingLabel>
