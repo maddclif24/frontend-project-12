@@ -8,7 +8,7 @@ import { io } from "socket.io-client";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import resources from "./locales/index.js";
 import App from "./components/App.jsx";
-import store from './slices/index.js';
+import store from "./slices/index.js";
 import SocketProvider from "./contexts/socket.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -33,11 +33,11 @@ const init = async () => {
   const root = ReactDOM.createRoot(document.getElementById("root"));
   root.render(
     <Provider store={store}>
-    <I18nextProvider i18n={i18n}>
-      <SocketProvider socket={socket}>
-        <App />
-      </SocketProvider>
-    </I18nextProvider>
+      <I18nextProvider i18n={i18n}>
+        <SocketProvider socket={socket}>
+          <App />
+        </SocketProvider>
+      </I18nextProvider>
     </Provider>,
   );
 };

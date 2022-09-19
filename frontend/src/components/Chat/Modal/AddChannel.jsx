@@ -74,21 +74,20 @@ const AddChannel = ({ show, close }) => {
                 controlId="name"
                 label="Имя канала"
                 className="visually-hidden"
-              >
+              />
 
-              </FloatingLabel>
-                <Form.Control
-                  type="text"
-                  autoFocus
-                  name="name"
-                  required
-                  onChange={formik.handleChange}
-                  value={formik.values.name}
-                  className={cn(
-                    'form-control',
-                    formik.errors.name ? 'is-invalid' : 'valid',
-                  )}
-                />
+              <Form.Control
+                type="text"
+                autoFocus
+                name="name"
+                required
+                onChange={formik.handleChange}
+                value={formik.values.name}
+                className={cn(
+                  'form-control',
+                  formik.errors.name ? 'is-invalid' : 'valid',
+                )}
+              />
               {formik.errors?.name ? (
                 <div className="invalid-feedback">{formik.errors.name}</div>
               ) : null}
