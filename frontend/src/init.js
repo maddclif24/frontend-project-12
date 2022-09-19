@@ -37,7 +37,7 @@ const init = async () => {
       <SocketProvider socket={socket}>
         <App />
       </SocketProvider>
-    </I18nextProvider>,
+    </I18nextProvider>
     </Provider>,
   );
 };
