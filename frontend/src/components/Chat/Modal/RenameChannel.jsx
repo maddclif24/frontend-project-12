@@ -83,7 +83,7 @@ const RenameChannel = ({
                 formik.errors.name ? 'is-invalid' : 'valid',
               )}
             />
-            <label controlId="name"
+            <label id='name'
                 label="Имя канала"
                 className="visually-hidden"
             />
