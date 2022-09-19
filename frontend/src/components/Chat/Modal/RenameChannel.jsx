@@ -42,7 +42,7 @@ const RenameChannel = ({
 
   const formik = useFormik({
     initialValues: {
-      name: `${selectChannelName}`,
+      name: '',
     },
     validationSchema: channelSchema,
     onSubmit: (values) => {
@@ -60,7 +60,8 @@ const RenameChannel = ({
 
   useEffect(() => {
     setTimeout(() => {
-      inputRef.current.select();
+      // inputRef.current.select();
+      inputRef.current.focus();
     }, 1);
   }, []);
 
