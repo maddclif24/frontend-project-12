@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import {
-  Modal, Form, Button, CloseButton,
+  Modal, Form, Button, CloseButton, FloatingLabel,
 } from 'react-bootstrap';
 import { io } from 'socket.io-client';
 import { toast } from 'react-toastify';
@@ -72,6 +72,13 @@ const RenameChannel = ({
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit} id="ChannelSubmit">
           <Form.Group className="mb-3">
+          <FloatingLabel
+                controlId="name"
+                label="Управление каналом"
+                className="visually-hidden"
+              >
+
+              </FloatingLabel>
             <Form.Control
               name="name"
               required
