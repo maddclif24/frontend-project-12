@@ -8,7 +8,8 @@ const Message = ({ message }) => {
   return (
     <div className="text-break mb-2">
       <b>{username}</b>
-      : {body}
+      :
+      {body}
     </div>
   );
 };

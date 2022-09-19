@@ -13,7 +13,7 @@ const Channels = () => {
   const arrayChannels = Object.keys(channels);
   return (
     <ul className="nav flex-column nav-pills nav-fill px-2">
-      {channels.map((channel) => <Channel key={channel.id} channel={channel} currentChannel={1} user={username}/>) }
+      {channels.map((channel) => <Channel key={channel.id} channel={channel} currentChannel={1} user={username} />)}
     </ul>
   );
 };
