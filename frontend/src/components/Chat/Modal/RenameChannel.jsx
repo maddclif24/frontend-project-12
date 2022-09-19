@@ -60,8 +60,8 @@ const RenameChannel = ({
 
   useEffect(() => {
     setTimeout(() => {
-      // inputRef.current.select();
-      inputRef.current.focus();
+      inputRef.current.select();
+      // inputRef.current.focus();
     }, 1);
   }, []);
 
@@ -73,6 +73,13 @@ const RenameChannel = ({
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit} id="name">
           <Form.Group className="mb-3">
+          <FloatingLabel
+                controlId="name"
+                label="Имя канала"
+                className="visually-hidden"
+              >
+
+              </FloatingLabel>
             <Form.Control
               name="name"
               required
@@ -84,10 +91,10 @@ const RenameChannel = ({
                 formik.errors.name ? 'is-invalid' : 'valid',
               )}
             />
-            <label id='name'
+            { /* <label id='name'
                 label="Имя канала"
                 className="visually-hidden"
-            />
+              /> */}
             { formik.errors?.name ? <div className="invalid-feedback">{formik.errors.name}</div> : null}
           </Form.Group>
         </Form>
