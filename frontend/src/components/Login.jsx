@@ -107,7 +107,7 @@ const LoginPage = () => {
                     >
                       <FloatingLabel
                         controlId="password"
-                        label="Ваш пароль"
+                        label="Пароль"
                         className="mb-3"
                         type="password"
                       >
