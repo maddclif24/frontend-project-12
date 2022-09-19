@@ -47,8 +47,8 @@ export default {
     },
     tostify: {
       successRename: 'Канал переименован',
-      successRemove: 'Канал удален',
-      successAdd: 'Канал добавлен',
+      successRemove: 'Канал удалён',
+      successAdd: 'Канал создан',
       errors: {
         connection: 'Ошибка подключения',
         network: 'Ошибка сети',
