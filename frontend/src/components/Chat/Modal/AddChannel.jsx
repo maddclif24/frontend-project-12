@@ -75,6 +75,8 @@ const AddChannel = ({ show, close }) => {
                 label="Имя канала"
                 className="visually-hidden"
               >
+
+              </FloatingLabel>
                 <Form.Control
                   type="text"
                   autoFocus
@@ -87,7 +89,6 @@ const AddChannel = ({ show, close }) => {
                     formik.errors.name ? 'is-invalid' : 'valid',
                   )}
                 />
-              </FloatingLabel>
               {formik.errors?.name ? (
                 <div className="invalid-feedback">{formik.errors.name}</div>
               ) : null}
