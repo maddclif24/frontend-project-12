@@ -85,7 +85,7 @@ const RenameChannel = ({
                 formik.errors.name ? 'is-invalid' : 'valid',
               )}
             />
-            <FormLabel htmlFor="name" visuallyHidden={true}>Имя канала</FormLabel>
+            <FormLabel htmlFor="name" visuallyHidden="true">Имя канала</FormLabel>
             { /* <label id='name'
                 label="Имя канала"
                 className="visually-hidden"
@@ -96,10 +96,10 @@ const RenameChannel = ({
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={close} variant="secondary">
-        {t('chatPage.channels.modalRename.close')}
+          {t('chatPage.channels.modalRename.close')}
         </Button>
         <Button type="submit" form="submit" variant="primary">
-        {t('chatPage.channels.modalRename.submit')}
+          {t('chatPage.channels.modalRename.submit')}
         </Button>
       </Modal.Footer>
     </Modal>
