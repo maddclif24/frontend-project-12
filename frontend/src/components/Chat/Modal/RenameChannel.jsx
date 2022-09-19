@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import {
-  Modal, Form, Button, CloseButton, FloatingLabel,
+  Modal, Form, Button, CloseButton, FloatingLabel, FormLabel,
 } from 'react-bootstrap';
 import { io } from 'socket.io-client';
 import { toast } from 'react-toastify';
@@ -42,7 +42,7 @@ const RenameChannel = ({
 
   const formik = useFormik({
     initialValues: {
-      name: '',
+      name: `${selectChannelName}`,
     },
     validationSchema: channelSchema,
     onSubmit: (values) => {
@@ -73,15 +73,9 @@ const RenameChannel = ({
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit} id="name">
           <Form.Group className="mb-3">
-          <FloatingLabel
-                controlId="name"
-                label="Имя канала"
-                className="visually-hidden"
-              >
-
-              </FloatingLabel>
             <Form.Control
               name="name"
+              id="name"
               required
               onChange={formik.handleChange}
               value={formik.values.name}
@@ -91,6 +85,7 @@ const RenameChannel = ({
                 formik.errors.name ? 'is-invalid' : 'valid',
               )}
             />
+            <FormLabel htmlFor="name" visuallyHidden={true}>Имя канала</FormLabel>
             { /* <label id='name'
                 label="Имя канала"
                 className="visually-hidden"
