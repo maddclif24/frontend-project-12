@@ -58,6 +58,7 @@ const LoginPage = () => {
   const ref = useRef(null);
 
   useEffect(() => {
+    localStorage.clear();
     ref.current.focus();
   }, []);
 
