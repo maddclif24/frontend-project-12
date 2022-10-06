@@ -25,7 +25,7 @@ describe('Registration', () => {
     cy.contains('Пароли должны совпадать').should('have.text', 'Пароли должны совпадать')
   })
 
-  /* it('add new User', () => {
+  it('add new User', () => {
     cy.reload()
     cy.get('input').first().focus().type('user').should('have.value', 'user')
     cy.get('input[name="password"]').type('user_password').should('have.value', 'user_password')
@@ -34,7 +34,6 @@ describe('Registration', () => {
     cy.get('input').first().should('have.value', '')
     // Возможно тут нужно использовать стаббинг
   })
-  */
 })
 
 describe('Auth', () => {
